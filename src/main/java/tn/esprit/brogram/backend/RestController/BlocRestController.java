@@ -2,6 +2,7 @@ package tn.esprit.brogram.backend.RestController;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Bloc;
 import tn.esprit.brogram.backend.Services.IBlocService;
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("BlocRestController")
 public class BlocRestController {
+    @Autowired
     IBlocService iBlocService ;
     @GetMapping("findAll")
     List<Bloc> findAll(){

@@ -1,5 +1,6 @@
 package tn.esprit.brogram.backend.RestController;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Foyer;
 import tn.esprit.brogram.backend.Services.IFoyerService;
@@ -11,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("FoyerRestController")
 public class FoyerRestController {
+    @Autowired
     IFoyerService iFoyerService;
 
     @GetMapping("findAllFoyer")

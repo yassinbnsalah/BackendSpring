@@ -2,6 +2,7 @@ package tn.esprit.brogram.backend.RestController;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping("UniversiteRestController")
 
 public class UniversiteRestController {
-
+    @Autowired
     IUniversiteService iUniversiteServices  ;
     @PostMapping(value = "addUniversite", consumes = MediaType.APPLICATION_JSON_VALUE)
     Universite addUniversite(@RequestBody Universite u){

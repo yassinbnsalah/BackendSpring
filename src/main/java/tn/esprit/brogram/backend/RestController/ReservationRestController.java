@@ -1,5 +1,6 @@
 package tn.esprit.brogram.backend.RestController;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Reservation;
 import tn.esprit.brogram.backend.Services.IReservationService;
@@ -11,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("ReservationRestController")
 public class ReservationRestController {
+    @Autowired
     IReservationService iReservationService;
 
     @GetMapping("findAllReservation")

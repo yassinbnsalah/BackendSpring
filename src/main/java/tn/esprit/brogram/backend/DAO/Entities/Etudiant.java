@@ -1,5 +1,7 @@
 package tn.esprit.brogram.backend.DAO.Entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +31,7 @@ public class Etudiant {
     @Column(name="dateNaissance")
     private LocalDate dateNaissance ;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "etudiants" , cascade =  CascadeType.ALL)
     private Set<Reservation> reservations ;
 }
