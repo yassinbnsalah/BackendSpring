@@ -5,8 +5,11 @@ import tn.esprit.brogram.backend.DAO.Entities.Reservation;
 import tn.esprit.brogram.backend.Services.IReservationService;
 
 import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
+@RequestMapping("ReservationRestController")
 public class ReservationRestController {
     IReservationService iReservationService;
 

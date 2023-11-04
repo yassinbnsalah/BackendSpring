@@ -8,9 +8,9 @@ public interface IUniversiteService {
     Universite addUniversite(Universite u);
     List<Universite> addAllUniversite(List<Universite> ls);
     Universite editUniversite(Universite u);
-    List<Universite> findAll();
-    Universite findById(long id);
-    void deleteById(long id);
-    void delete(Universite u);
+    List<Universite> UnifindAll();
+    Universite UnifindById(long id);
+    void UnideleteById(long id);
+    void Unidelete(Universite u);
 
 }

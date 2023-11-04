@@ -1,5 +1,7 @@
 package tn.esprit.brogram.backend.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +25,7 @@ public class Reservation {
 
     @Column(name="estValide")
     private Boolean estValide ;
+    @JsonManagedReference
     @ManyToMany(cascade = CascadeType.ALL)
     public Set<Etudiant> etu ;
 }

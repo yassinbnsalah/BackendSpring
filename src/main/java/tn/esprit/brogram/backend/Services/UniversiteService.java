@@ -23,22 +23,22 @@ public class UniversiteService implements IUniversiteService{
     }
 
     @Override
-    public List<Universite> findAll() {
+    public List<Universite> UnifindAll() {
         return universiteRepository.findAll();
     }
 
     @Override
-    public Universite findById(long id) {
+    public Universite UnifindById(long id) {
         return universiteRepository.findById(id).orElse(Universite.builder().build());
     }
 
     @Override
-    public void deleteById(long id) {
+    public void UnideleteById(long id) {
         universiteRepository.deleteById(id);
     }
 
     @Override
-    public void delete(Universite u) {
+    public void Unidelete(Universite u) {
         universiteRepository.delete(u);
     }
 }

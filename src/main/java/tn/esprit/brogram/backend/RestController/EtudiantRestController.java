@@ -9,8 +9,10 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("EtudiantRestController")
 public class EtudiantRestController {
     IEtudiantService iEtudiantService;
+
     @GetMapping("findAllEtudiant")
     List<Etudiant> findAll(){
         return iEtudiantService.findAll();

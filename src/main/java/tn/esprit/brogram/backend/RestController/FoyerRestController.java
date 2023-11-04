@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("FoyerRestController")
 public class FoyerRestController {
     IFoyerService iFoyerService;
 
