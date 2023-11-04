@@ -1,4 +1,6 @@
 package tn.esprit.brogram.backend.DAO.Entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,9 +22,8 @@ public class Foyer {
 
     @Column(name="capaciteFoyer")
     private long capaciteFoyer ;
-    @OneToOne(mappedBy = "foyer")
+   @OneToOne(mappedBy = "foyer")
     private Universite universite ;
-
     @OneToMany(mappedBy = "foyer")
     List<Bloc> blocs ;
 }

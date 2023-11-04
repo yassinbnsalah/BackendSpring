@@ -25,7 +25,7 @@ public class Reservation {
 
     @Column(name="estValide")
     private Boolean estValide ;
-    @JsonManagedReference
+
     @ManyToMany(cascade = CascadeType.ALL)
-    public Set<Etudiant> etu ;
+    public Set<Etudiant> etudiants ;
 }

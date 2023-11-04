@@ -1,10 +1,13 @@
 package tn.esprit.brogram.backend.Services;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 
 import java.util.List;
-
+@AllArgsConstructor
+@Service
 public class UniversiteService implements IUniversiteService{
     UniversiteRepository universiteRepository ;
     @Override

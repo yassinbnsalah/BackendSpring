@@ -28,7 +28,7 @@ public class Etudiant {
     private String ecole ;
     @Column(name="dateNaissance")
     private LocalDate dateNaissance ;
-    @JsonBackReference
-    @ManyToMany(mappedBy = "etu" , cascade =  CascadeType.ALL)
-    private Set<Reservation> res ;
+
+    @ManyToMany(mappedBy = "etudiants" , cascade =  CascadeType.ALL)
+    private Set<Reservation> reservations ;
 }
