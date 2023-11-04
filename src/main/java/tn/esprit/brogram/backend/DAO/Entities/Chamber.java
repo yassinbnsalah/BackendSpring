@@ -1,7 +1,5 @@
 package tn.esprit.brogram.backend.DAO.Entities;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name="chamber")
 @Builder
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "idChamber")
 public class Chamber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +23,10 @@ public class Chamber {
 
     @Column(name="TypeC")
     private TypeChamber typeC ;
-
+    @JsonIgnore
     @ManyToOne
     Bloc bloc ;
-    @JsonIgnore
+
     @OneToMany(cascade =  CascadeType.ALL)
     private  Set<Reservation> res  ;
 }

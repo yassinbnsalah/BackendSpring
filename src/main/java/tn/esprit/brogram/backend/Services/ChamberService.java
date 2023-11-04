@@ -2,11 +2,13 @@ package tn.esprit.brogram.backend.Services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.brogram.backend.DAO.Entities.Chamber;
+import tn.esprit.brogram.backend.DAO.Entities.Reservation;
 import tn.esprit.brogram.backend.DAO.Repositories.ChamberRepository;
 
 import java.util.List;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @Service
@@ -15,6 +17,15 @@ public class ChamberService implements IChamberService{
     @Override
     public Chamber addChamber(Chamber c) {
         return chamberRepository.save(c) ;
+    }
+
+    @Override
+    public Chamber addChamberReservation(long idCh , Reservation r) {
+        Chamber ch = chamberRepository.findById(idCh).orElse(Chamber.builder().build());
+        Set<Reservation> reservations = ch.getRes();
+        ch.getRes().add(r);
+
+        return chamberRepository.save(ch);
     }
 
     @Override

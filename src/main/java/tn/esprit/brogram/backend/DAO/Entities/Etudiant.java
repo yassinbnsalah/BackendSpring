@@ -1,7 +1,5 @@
 package tn.esprit.brogram.backend.DAO.Entities;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "idEtudiant")
 public class Etudiant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +30,7 @@ public class Etudiant {
     @Column(name="dateNaissance")
     private LocalDate dateNaissance ;
 
-    @JsonBackReference
+
     @ManyToMany(mappedBy = "etudiants" , cascade =  CascadeType.ALL)
     private Set<Reservation> reservations ;
 }

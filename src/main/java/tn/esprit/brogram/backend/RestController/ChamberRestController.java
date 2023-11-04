@@ -3,6 +3,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Chamber;
+import tn.esprit.brogram.backend.DAO.Entities.Reservation;
 import tn.esprit.brogram.backend.Services.IChamberService;
 
 
@@ -28,7 +29,10 @@ public class ChamberRestController {
     Chamber addChamber(@RequestBody Chamber c){
         return iChamberService.addChamber(c);
     }
-
+    @PutMapping("putChamberReservation/{id}")
+    Chamber putChamberReservation(@PathVariable("id") long idCh , @RequestBody Reservation r){
+        return iChamberService.addChamberReservation(idCh , r);
+    }
     @PostMapping("addAllChambers")
     List<Chamber> AddAllChambers(@RequestBody List<Chamber> ls){
         return iChamberService.addAllChambers(ls);
