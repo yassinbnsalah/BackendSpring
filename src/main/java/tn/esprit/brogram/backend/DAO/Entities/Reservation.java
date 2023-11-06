@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "idReservation")
+
 public class Reservation {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,7 @@ public class Reservation {
 
     @Column(name="estValide")
     private Boolean estValide ;
+
     @ManyToMany(cascade = CascadeType.ALL)
     public Set<Etudiant> etudiants ;
 }

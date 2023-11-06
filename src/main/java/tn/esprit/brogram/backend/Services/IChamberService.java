@@ -8,6 +8,7 @@ import java.util.List;
 public interface IChamberService {
     Chamber addChamber(Chamber c);
     Chamber addChamberReservation(long idChamber , Reservation r);
+    Chamber findChamberByResIdReservation(String idReservation);
     List<Chamber> addAllChambers(List<Chamber> ls);
     Chamber editChamber(Chamber c);
     List<Chamber> findAll() ;

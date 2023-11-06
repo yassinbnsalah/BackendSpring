@@ -4,17 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Chamber;
 import tn.esprit.brogram.backend.DAO.Entities.Reservation;
+import tn.esprit.brogram.backend.DAO.Repositories.ChamberRepository;
 import tn.esprit.brogram.backend.Services.IChamberService;
 
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @AllArgsConstructor
 @RequestMapping("ChamberRestController")
 public class ChamberRestController {
     @Autowired
     IChamberService iChamberService ;
+    @Autowired
+    ChamberRepository chamberRepo;
 
     @GetMapping("findAllChambers")
     List<Chamber> findAll(){
@@ -32,6 +36,11 @@ public class ChamberRestController {
     @PutMapping("putChamberReservation/{id}")
     Chamber putChamberReservation(@PathVariable("id") long idCh , @RequestBody Reservation r){
         return iChamberService.addChamberReservation(idCh , r);
+    }
+
+    @GetMapping("getChambersByReservation/{id}")
+    Chamber getChamberByReservation(@PathVariable("id") String idReservation){
+        return iChamberService.findChamberByResIdReservation(idReservation) ;
     }
     @PostMapping("addAllChambers")
     List<Chamber> AddAllChambers(@RequestBody List<Chamber> ls){

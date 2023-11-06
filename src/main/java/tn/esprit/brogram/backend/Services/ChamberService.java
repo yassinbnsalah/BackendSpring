@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 import tn.esprit.brogram.backend.DAO.Entities.Chamber;
 import tn.esprit.brogram.backend.DAO.Entities.Reservation;
 import tn.esprit.brogram.backend.DAO.Repositories.ChamberRepository;
+import tn.esprit.brogram.backend.DAO.Repositories.ReservationRepository;
 
+import java.util.HashSet;
 import java.util.List;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.Set;
 @Service
 public class ChamberService implements IChamberService{
     ChamberRepository chamberRepository;
+    ReservationRepository reservationRepository ;
     @Override
     public Chamber addChamber(Chamber c) {
         return chamberRepository.save(c) ;
@@ -27,6 +30,12 @@ public class ChamberService implements IChamberService{
 
         return chamberRepository.save(ch);
     }
+
+    @Override
+    public Chamber findChamberByResIdReservation(String idReservation) {
+        return chamberRepository.findChamberByResIdReservation(idReservation);
+    }
+
 
     @Override
     public List<Chamber> addAllChambers(List<Chamber> ls) {

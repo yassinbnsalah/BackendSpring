@@ -2,10 +2,13 @@ package tn.esprit.brogram.backend.RestController;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.brogram.backend.DAO.Entities.Etudiant;
 import tn.esprit.brogram.backend.DAO.Entities.Reservation;
 import tn.esprit.brogram.backend.Services.IReservationService;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -27,6 +30,13 @@ public class ReservationRestController {
 
     @PostMapping("addReservation")
     Reservation addReservation(@RequestBody Reservation r){
+
+        Set<Etudiant> e = r.getEtudiants() ;
+
+        r.setAnneeReservation(new Date());
+        Etudiant[] names = e.toArray(new Etudiant[e.size()]);
+        r.setIdReservation(names[0].getNomEt()+r.getAnneeReservation().getTime());
+        //return r;
         return iReservationService.addReservation(r);
     }
 

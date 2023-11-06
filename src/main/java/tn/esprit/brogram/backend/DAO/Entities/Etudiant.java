@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "idEtudiant")
+
 public class Etudiant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class Etudiant {
     @Column(name="dateNaissance")
     private LocalDate dateNaissance ;
 
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "etudiants" , cascade =  CascadeType.ALL)
     private Set<Reservation> reservations ;
 }
