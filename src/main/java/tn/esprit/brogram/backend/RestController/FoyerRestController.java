@@ -3,6 +3,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Foyer;
+import tn.esprit.brogram.backend.DAO.Entities.Universite;
+import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 import tn.esprit.brogram.backend.Services.IFoyerService;
 
 
@@ -14,7 +16,7 @@ import java.util.List;
 public class FoyerRestController {
     @Autowired
     IFoyerService iFoyerService;
-
+    UniversiteRepository universiteRepository;
     @GetMapping("findAllFoyer")
     List<Foyer> findAll(){
         return iFoyerService.findAllFoyer();
@@ -25,8 +27,10 @@ public class FoyerRestController {
         return iFoyerService.findByIDFoyer(id);
     }
 
-    @PostMapping("AddFoyer")
-    Foyer AddFoyer(@RequestBody Foyer f){
+    @PostMapping("AddFoyer/{name}")
+    Foyer AddFoyer(@RequestBody Foyer f , @PathVariable("name") String name){
+        Universite u = universiteRepository.findUnBynomUniversite(name);
+        f.setIdFoyer(u.getNomUniversite()+f.getNomFoyer());
         return iFoyerService.AddFoyer(f);
     }
 

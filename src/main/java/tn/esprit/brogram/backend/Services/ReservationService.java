@@ -30,9 +30,10 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Reservation updateReservationState(String id, StateReservation status) {
-        Optional<Reservation> r = reservationRepository.findById(id);
+        Reservation r = reservationRepository.findById(id).orElse(Reservation.builder().build());
+        r.setStatus(status);
 
-        return null;
+        return reservationRepository.save(r);
     }
 
     @Override

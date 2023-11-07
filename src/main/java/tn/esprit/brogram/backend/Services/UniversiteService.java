@@ -48,7 +48,7 @@ public class UniversiteService implements IUniversiteService{
 
     @Override
     public Universite updateStatus(long id, String status) {
-        Universite universite = universiteRepository.findById(id).orElseThrow(() -> new RuntimeException("University not found"));
+        Universite universite = universiteRepository.findById(id).orElse(Universite.builder().build());
         universite.setStatuts(status);
         return universiteRepository.save(universite);
     }

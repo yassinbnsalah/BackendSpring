@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Etudiant;
 import tn.esprit.brogram.backend.DAO.Entities.Reservation;
+import tn.esprit.brogram.backend.DAO.Entities.StateReservation;
 import tn.esprit.brogram.backend.Services.IReservationService;
 
 import java.util.Date;
@@ -50,6 +51,10 @@ public class ReservationRestController {
         return iReservationService.editReservation(r);
     }
 
+    @PutMapping("updateReservationStatus/{id}/{status}")
+    Reservation updateReservationStatus(@PathVariable("id") String idReservation , @PathVariable("status")StateReservation status){
+        return iReservationService.updateReservationState(idReservation , status);
+    }
     @DeleteMapping("DeleteReservation/{id}")
     void DeleteReservationByID(@PathVariable("id") String id){
         iReservationService.deleteById(id);
