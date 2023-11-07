@@ -26,6 +26,16 @@ public class Reservation {
     @Column(name="estValide")
     private Boolean estValide ;
 
+    @Column(name="dateDebut")
+    private Date dateDebut ;
+
+    @Column(name="dateFin")
+    private Date dateFin  ;
+
+    @Column(name="status")
+    private StateReservation status ;
+
+
     @ManyToMany(cascade = CascadeType.ALL)
     public Set<Etudiant> etudiants ;
 }

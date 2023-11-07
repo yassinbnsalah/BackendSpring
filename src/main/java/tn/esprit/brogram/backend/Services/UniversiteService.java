@@ -2,6 +2,7 @@ package tn.esprit.brogram.backend.Services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 
@@ -43,5 +44,12 @@ public class UniversiteService implements IUniversiteService{
     @Override
     public void Unidelete(Universite u) {
         universiteRepository.delete(u);
+    }
+
+    @Override
+    public Universite updateStatus(long id, String status) {
+        Universite universite = universiteRepository.findById(id).orElseThrow(() -> new RuntimeException("University not found"));
+        universite.setStatuts(status);
+        return universiteRepository.save(universite);
     }
 }

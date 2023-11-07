@@ -12,7 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name="chamber")
 @Builder
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "idChamber")
 public class Chamber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

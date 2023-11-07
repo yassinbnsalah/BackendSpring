@@ -22,8 +22,8 @@ public class Foyer {
 
     @Column(name="capaciteFoyer")
     private long capaciteFoyer ;
-
-   @OneToOne(mappedBy = "foyer" , cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToOne(mappedBy = "foyer" , cascade = CascadeType.ALL)
     private Universite universite ;
 
     @OneToMany(mappedBy = "foyer" , cascade =  CascadeType.ALL)

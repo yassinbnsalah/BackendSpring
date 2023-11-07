@@ -5,9 +5,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Bloc;
+import tn.esprit.brogram.backend.DAO.Entities.Foyer;
+import tn.esprit.brogram.backend.DAO.Entities.Universite;
+import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 import tn.esprit.brogram.backend.Services.IBlocService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -15,13 +19,17 @@ import java.util.List;
 public class BlocRestController {
     @Autowired
     IBlocService iBlocService ;
+    UniversiteRepository universiteRepository ;
     @GetMapping("findAll")
     List<Bloc> findAll(){
         return iBlocService.findAll();
     }
 
-    @PostMapping("addBloc")
-    Bloc AddBloc(@RequestBody Bloc b ){
+    @PostMapping("addBloc/{name}")
+    Bloc AddBloc(@RequestBody Bloc b , @PathVariable("name") String name){
+        Universite u = universiteRepository.findUnBynomUniversite(name) ;
+        Foyer f = u.getFoyer() ;
+        b.setFoyer(f);
         return iBlocService.addBloc(b);
     }
 

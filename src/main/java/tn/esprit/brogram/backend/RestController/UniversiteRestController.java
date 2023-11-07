@@ -3,13 +3,16 @@ package tn.esprit.brogram.backend.RestController;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
 import tn.esprit.brogram.backend.Services.IUniversiteService;
 
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("UniversiteRestController")
@@ -19,8 +22,7 @@ public class UniversiteRestController {
     IUniversiteService iUniversiteServices  ;
     @PostMapping(value = "addUniversite", consumes = MediaType.APPLICATION_JSON_VALUE)
     Universite addUniversite(@RequestBody Universite u){
-
-        System.out.println("add universite");
+        u.setStatuts("En_attente");
         return iUniversiteServices.addUniversite(u);
     }
 
@@ -51,4 +53,14 @@ public class UniversiteRestController {
         iUniversiteServices.Unidelete(u);
     }
 
+    @PutMapping("updateStatus/{id}")
+    public ResponseEntity<Universite> updateStatus(@PathVariable long id, @RequestParam String status) {
+        try {
+            Universite updatedUniversite = iUniversiteServices.updateStatus(id, status);
+            return new ResponseEntity<>(updatedUniversite, HttpStatus.OK);
+        } catch (Exception ex) {
+            // Handle any exceptions here
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

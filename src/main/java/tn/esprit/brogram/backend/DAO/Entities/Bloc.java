@@ -29,7 +29,7 @@ public class Bloc {
     @ManyToOne
     Foyer foyer ;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "bloc" , cascade = CascadeType.ALL)
     private Set<Chamber> chambers;
 }
