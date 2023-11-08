@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -24,6 +25,18 @@ public class Chamber {
 
     @Column(name="TypeC")
     private TypeChamber typeC ;
+
+    @Column(name="Description")
+    private String Description;
+
+    @Column(name="Etat")
+    private boolean Etat;
+
+    @Column(name="CreatedAt")
+    private Date CreatedAt;
+
+    @Column(name="UpdatedAt")
+    private Date UpdatedAt;
 
     @ManyToOne
     Bloc bloc ;
