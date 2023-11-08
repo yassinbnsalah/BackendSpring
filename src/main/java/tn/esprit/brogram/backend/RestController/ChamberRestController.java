@@ -8,6 +8,7 @@ import tn.esprit.brogram.backend.DAO.Repositories.ChamberRepository;
 import tn.esprit.brogram.backend.Services.IChamberService;
 
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -31,28 +32,33 @@ public class ChamberRestController {
     }
     @PostMapping("addChamber")
     Chamber addChamber(@RequestBody Chamber c){
+        c.setCreatedAt(new Date());
         return iChamberService.addChamber(c);
+
     }
     @PutMapping("putChamberReservation/{id}")
     Chamber putChamberReservation(@PathVariable("id") long idCh , @RequestBody Reservation r){
         return iChamberService.addChamberReservation(idCh , r);
     }
-
     @GetMapping("getChambersByReservation/{id}")
     Chamber getChamberByReservation(@PathVariable("id") String idReservation){
         return iChamberService.findChamberByResIdReservation(idReservation) ;
     }
-    @PostMapping("addAllChambers")
+
+    @PostMapping("/addAllChambers")
     List<Chamber> AddAllChambers(@RequestBody List<Chamber> ls){
         return iChamberService.addAllChambers(ls);
     }
     @PutMapping("updateChamber")
     Chamber editChamber(@RequestBody Chamber c){
+
+        c.setUpdatedAt(new Date());
         return iChamberService.editChamber(c);
     }
 
     @DeleteMapping("deleteChamberById/{id}")
     void DeleteChamberByID(@PathVariable("id") long id){
+
         iChamberService.deleteByID(id);
     }
 
