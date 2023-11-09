@@ -30,6 +30,9 @@ public class FoyerRestController {
     @PostMapping("AddFoyer/{name}")
     Foyer AddFoyer(@RequestBody Foyer f , @PathVariable("name") String name){
         Universite u = universiteRepository.findUnBynomUniversite(name);
+        // MECH BEST PARCTICE *
+        u.setFoyer(f);
+        universiteRepository.save(u);
         //f.setIdFoyer(u.getNomUniversite()+f.getNomFoyer());
         return iFoyerService.AddFoyer(f);
     }
