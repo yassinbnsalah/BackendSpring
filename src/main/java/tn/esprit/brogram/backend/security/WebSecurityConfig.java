@@ -29,7 +29,7 @@ public class WebSecurityConfig {
                 .securityMatcher("/**")
                 .authorizeHttpRequests(Registry -> Registry
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui/index.html/**").permitAll()
                         .requestMatchers("/FoyerRestController/**").permitAll()
                         .requestMatchers("/ChamberRestController/**").permitAll()
                         .requestMatchers("/ReservationRestController/**").permitAll()

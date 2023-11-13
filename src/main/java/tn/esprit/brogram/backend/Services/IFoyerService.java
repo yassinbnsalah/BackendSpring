@@ -9,7 +9,8 @@ public interface IFoyerService {
     List<Foyer> AddAllFoyer(List<Foyer> ls);
     Foyer editFoyer(Foyer f);
     List<Foyer> findAllFoyer();
-    Foyer findByIDFoyer(String id);
-    void DeleteByIDFoyer(String id);
+    Foyer findByIDFoyer(long id);
+    void DeleteByIDFoyer(long id);
     void deleteFoyer(Foyer f);
+    void updateEtatById(long idFoyer, boolean newEtat);
 }

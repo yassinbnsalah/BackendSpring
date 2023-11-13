@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +24,15 @@ public class Foyer {
 
     @Column(name="capaciteFoyer")
     private long capaciteFoyer ;
+    @Column(name="Etat")
+    private boolean Etat;
+
+    @Column(name="CreatedAt")
+    private Date CreatedAt;
+
+    @Column(name="UpdatedAt")
+    private Date UpdatedAt;
+
     @JsonIgnore
     @OneToOne(mappedBy = "foyer" , cascade = CascadeType.ALL)
     private Universite universite ;
