@@ -32,6 +32,7 @@ public class FoyerRestController {
 
     @PostMapping("AddAllFoyer")
     List<Foyer> AddAllFoyer(@RequestBody List<Foyer> ls){
+        //lll
         return iFoyerService.AddAllFoyer(ls);
     }
 
