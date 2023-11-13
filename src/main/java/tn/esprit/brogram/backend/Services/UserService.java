@@ -9,7 +9,7 @@ import tn.esprit.brogram.backend.DAO.Repositories.UserRepository;
 
 @Service
 //@RequiredArgsConstructor
-public class UserService {
+public class UserService implements IUserService {
     private final UserRepository userRepo;
 
     public UserService(UserRepository userRepo) {

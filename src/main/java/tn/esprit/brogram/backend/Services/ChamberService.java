@@ -68,4 +68,9 @@ public class ChamberService implements IChamberService{
         chamberRepository.delete(c);
 
     }
+
+    @Override
+    public List<Chamber> findChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite) {
+        return chamberRepository.findChamberByBlocFoyerUniversiteNomUniversite(nomUniversite);
+    }
 }

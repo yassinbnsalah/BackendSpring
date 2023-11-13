@@ -26,6 +26,10 @@ public class UniversiteRestController {
         return iUniversiteServices.addUniversite(u);
     }
 
+    @GetMapping("findUniversiteByEmailAgent/{email}")
+    Universite findUniversiteByEmailAgent(@PathVariable("email") String email){
+        return iUniversiteServices.findUniversiteByEmail(email);
+    }
     @GetMapping("findAll")
     List<Universite> UnifindAll(){
         return iUniversiteServices.UnifindAll();

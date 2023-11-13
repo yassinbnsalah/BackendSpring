@@ -52,4 +52,9 @@ public class UniversiteService implements IUniversiteService{
         universite.setStatuts(status);
         return universiteRepository.save(universite);
     }
+
+    @Override
+    public Universite findUniversiteByEmail(String email) {
+        return universiteRepository.findUniversiteByEmail(email);
+    }
 }

@@ -19,11 +19,23 @@ public class Universite {
     @Column(name="nomUniversite")
     private String nomUniversite ;
 
-    @Column(name="adress")
-    private String adress ;
+    @Column(name="adresse")
+    private String adresse ;
 
     @Column(name = "statuts")
     private String statuts;
+
+    @Column(name = "firstNameAgent")
+    private String firstNameAgent;
+
+    @Column(name = "lastNameAgent")
+    private String lastNameAgent;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "description")
+    private String description;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Foyer foyer ;

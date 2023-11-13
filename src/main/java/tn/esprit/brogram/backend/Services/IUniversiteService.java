@@ -14,4 +14,5 @@ public interface IUniversiteService {
     void UnideleteById(long id);
     void Unidelete(Universite u);
     Universite updateStatus(long id, String status);
+    Universite findUniversiteByEmail(String email);
 }

@@ -15,4 +15,5 @@ public interface IChamberService {
     Chamber findById(long id);
     void deleteByID(long id);
     void delete(Chamber c);
+    List<Chamber> findChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite);
 }

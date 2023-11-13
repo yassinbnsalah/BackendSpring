@@ -28,12 +28,15 @@ public class WebSecurityConfig {
                 .and().formLogin().disable()
                 .securityMatcher("/**")
                 .authorizeHttpRequests(Registry -> Registry
+
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/swagger-ui/index.html/**").permitAll()
+
                         .requestMatchers("/FoyerRestController/**").permitAll()
                         .requestMatchers("/ChamberRestController/**").permitAll()
                         .requestMatchers("/ReservationRestController/**").permitAll()
+                        .requestMatchers("/BlocRestController/**").permitAll()
                         .requestMatchers("/UniversiteRestController/**").permitAll()
+                        .requestMatchers("/UserRestController/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/register").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")

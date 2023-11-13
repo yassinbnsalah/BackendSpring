@@ -5,4 +5,5 @@ import tn.esprit.brogram.backend.DAO.Entities.Universite;
 
 public interface UniversiteRepository extends JpaRepository<Universite,Long> {
     Universite findUnBynomUniversite(String name);
+    Universite findUniversiteByEmail(String email);
 }
