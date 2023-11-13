@@ -32,7 +32,7 @@ public class BlocService implements IBlocService{
 
     @Override
     public Bloc findById(long id) {
-        //return blocRepository.findById(id);
+
         return blocRepository.findById(id).orElse(Bloc.builder().idBloc(0).nomBloc("No Bloc Founded").build());
 
     }
