@@ -20,11 +20,13 @@ public class ChamberRestController {
     IChamberService iChamberService ;
     @Autowired
     ChamberRepository chamberRepo;
+    ///ssss top
 
     @GetMapping("findAllChambers")
     List<Chamber> findAll(){
         return iChamberService.findAll();
     }
+    ///ssss top
 
     @GetMapping("findChamberByID/{id}")
     Chamber findChamberByID(@PathVariable("id") long id){
@@ -36,6 +38,8 @@ public class ChamberRestController {
         return iChamberService.addChamber(c);
 
     }
+    ///ssss top
+
     @PutMapping("putChamberReservation/{id}")
     Chamber putChamberReservation(@PathVariable("id") long idCh , @RequestBody Reservation r){
         return iChamberService.addChamberReservation(idCh , r);
