@@ -35,7 +35,8 @@ public class Reservation {
     @Column(name="status")
     private StateReservation status ;
 
-
     @ManyToMany(cascade = CascadeType.ALL)
-    public Set<Etudiant> etudiants ;
+    public Set<User> etudiants ;
+
+
 }

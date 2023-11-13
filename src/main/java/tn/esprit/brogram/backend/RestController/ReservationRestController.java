@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Etudiant;
 import tn.esprit.brogram.backend.DAO.Entities.Reservation;
 import tn.esprit.brogram.backend.DAO.Entities.StateReservation;
+import tn.esprit.brogram.backend.DAO.Entities.User;
 import tn.esprit.brogram.backend.Services.IReservationService;
 
 import java.util.Date;
@@ -29,13 +30,18 @@ public class ReservationRestController {
         return iReservationService.findByIdReservation(id);
     }
 
+    @GetMapping("findReservationByIDEtudiant/{email}")
+    List<Reservation> findReservationByIDEtudiant(@PathVariable("email") String email){
+        return iReservationService.findReservationByEmailEtudiant(email);
+    }
+
     @PostMapping("addReservation")
     Reservation addReservation(@RequestBody Reservation r){
 
-        Set<Etudiant> e = r.getEtudiants() ;
+        Set<User> e = r.getEtudiants() ;
 
         r.setAnneeReservation(new Date());
-        Etudiant[] names = e.toArray(new Etudiant[e.size()]);
+        User[] names = e.toArray(new User[e.size()]);
         r.setIdReservation(names[0].getNomEt()+r.getAnneeReservation().getTime());
         //return r;
         return iReservationService.addReservation(r);

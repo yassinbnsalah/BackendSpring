@@ -42,6 +42,11 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
+    public List<Reservation> findReservationByEmailEtudiant(String email) {
+        return reservationRepository.findReservationByEtudiants_email(email);
+    }
+
+    @Override
     public Reservation findByIdReservation(String id) {
         return reservationRepository.findById(id).orElse(Reservation.builder().build());
     }

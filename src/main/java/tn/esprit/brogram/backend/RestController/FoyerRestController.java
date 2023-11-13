@@ -9,7 +9,7 @@ import tn.esprit.brogram.backend.Services.IFoyerService;
 
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("FoyerRestController")

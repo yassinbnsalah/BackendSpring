@@ -11,7 +11,7 @@ public interface IReservationService {
     Reservation editReservation(Reservation r);
     Reservation updateReservationState(String id , StateReservation status);
     List<Reservation> findAllReservations();
-
+    List<Reservation> findReservationByEmailEtudiant(String email);
     Reservation findByIdReservation(String id);
 
     void deleteById(String id);
