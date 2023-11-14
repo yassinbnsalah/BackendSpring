@@ -17,34 +17,37 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("FoyerRestController")
 public class FoyerRestController {
+    private final FoyerRepository foyerRepository;
+    @Autowired
+    public FoyerRestController(FoyerRepository foyerRepository) {
+        this.foyerRepository = foyerRepository;
+    }
     @Autowired
     IFoyerService iFoyerService;
     UniversiteRepository universiteRepository;
-    FoyerRepository foyerRepository;
     @GetMapping("findAllFoyer")
     List<Foyer> findAll(){
         return iFoyerService.findAllFoyer();
     }
 
+    @GetMapping("findFoyerByUnversiteName/{nom}")
+    List<Foyer> findFoyerByUniversiteNomUniversite(@PathVariable("nom") String nom){
+        return iFoyerService.findFoyerByUniversersite(nom);
+    }
     @GetMapping("findByIdFoyer/{id}")
     Foyer findbyIdFoyer(@PathVariable("id") long id){
         return iFoyerService.findByIDFoyer(id);
     }
 
+
     @PostMapping("AddFoyer/{name}")
     Foyer AddFoyer(@RequestBody Foyer f , @PathVariable("name") String name){
-        Universite u = universiteRepository.findUnBynomUniversite(name);
-        // MECH BEST PARCTICE *
-        u.setFoyer(f);
-        universiteRepository.save(u);
-        f.setCreatedAt(new Date());
-        //f.setIdFoyer(u.getNomUniversite()+f.getNomFoyer());
-        return iFoyerService.AddFoyer(f);
+
+        return iFoyerService.AddFoyer(f,name);
     }
 
     @PostMapping("AddAllFoyer")
     List<Foyer> AddAllFoyer(@RequestBody List<Foyer> ls){
-        //lll
         return iFoyerService.AddAllFoyer(ls);
     }
 
@@ -57,6 +60,11 @@ public class FoyerRestController {
     void DeleteFoyerByID(@PathVariable("id") long id){
         iFoyerService.DeleteByIDFoyer(id);
     }
+
+    @DeleteMapping("DeleteFoyer")
+    void DeleteFoyer(@RequestBody Foyer f){
+        iFoyerService.deleteFoyer(f);
+    }
     @PutMapping("updateEtatById/{idFoyer}")
     public ResponseEntity<String> updateFoyerEtatById(@PathVariable long idFoyer) {
         Foyer foyer = foyerRepository.findById(idFoyer).orElse(null);
@@ -67,10 +75,5 @@ public class FoyerRestController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @DeleteMapping("DeleteFoyer")
-    void DeleteFoyer(@RequestBody Foyer f){
-        iFoyerService.deleteFoyer(f);
     }
 }
