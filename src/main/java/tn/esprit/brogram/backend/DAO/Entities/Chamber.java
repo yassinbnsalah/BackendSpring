@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,4 +43,7 @@ public class Chamber {
 
     @OneToMany(cascade =  CascadeType.ALL)
     private  Set<Reservation> res  ;
+    @JsonIgnore
+    @OneToMany(mappedBy = "chamber", cascade = CascadeType.ALL)
+    private List<Commentaire> commentaires;
 }

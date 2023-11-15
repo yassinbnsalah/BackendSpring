@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("BlocRestController")
+    @RequestMapping("BlocRestController")
 public class BlocRestController {
     @Autowired
     IBlocService iBlocService ;
