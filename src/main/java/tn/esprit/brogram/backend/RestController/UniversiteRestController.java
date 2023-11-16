@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import tn.esprit.brogram.backend.DAO.Entities.Image;
-import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
-import tn.esprit.brogram.backend.DAO.Entities.Universite;
+import tn.esprit.brogram.backend.DAO.Entities.*;
 import tn.esprit.brogram.backend.DAO.Repositories.ImageRepositroy;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
+import tn.esprit.brogram.backend.DAO.Repositories.UserRepository;
 import tn.esprit.brogram.backend.Services.IUniversiteService;
 
 import java.io.IOException;
@@ -83,11 +83,25 @@ public class UniversiteRestController {
     void Unidelete(@RequestBody Universite u){
         iUniversiteServices.Unidelete(u);
     }
-
+    private final PasswordEncoder passwordEncoder;
+    UserRepository userRepository ;
     @PutMapping("updateStatus/{id}")
     public ResponseEntity<Universite> updateStatus(@PathVariable long id, @RequestParam String status) {
         try {
             Universite updatedUniversite = iUniversiteServices.updateStatus(id, status);
+            if(status.equals("Accepté")){
+                User user = new User();
+                user.setNomEt(updatedUniversite.getFirstNameAgent());
+                user.setPrenomEt(updatedUniversite.getLastNameAgent());
+                user.setCin(12345678);
+                user.setEcole(updatedUniversite.getNomUniversite());
+
+
+                user.setEmail(updatedUniversite.getEmail());
+                user.setPassword(passwordEncoder.encode((updatedUniversite.getEmail())));
+                user.setRole(Roles.AGENTUNIVERSITE);
+                userRepository.save(user);
+            }
             return new ResponseEntity<>(updatedUniversite, HttpStatus.OK);
         } catch (Exception ex) {
             // Handle any exceptions here
