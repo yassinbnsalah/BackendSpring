@@ -21,6 +21,7 @@ import tn.esprit.brogram.backend.security.JwtIssuer;
 
 
 @RestController
+
 @RequiredArgsConstructor
 public class AuthController {
     private final UserRepository userRepo;

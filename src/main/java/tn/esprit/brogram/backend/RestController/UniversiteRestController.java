@@ -6,11 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.brogram.backend.DAO.Entities.Image;
 import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
+import tn.esprit.brogram.backend.DAO.Repositories.ImageRepositroy;
+import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 import tn.esprit.brogram.backend.Services.IUniversiteService;
 
+import java.io.IOException;
 import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,6 +30,27 @@ public class UniversiteRestController {
     Universite addUniversite(@RequestBody Universite u){
         u.setStatuts("En_attente");
         return iUniversiteServices.addUniversite(u);
+    }
+    UniversiteRepository universiteRepository ;
+    ImageRepositroy imageRepositroy ;
+    @PostMapping("/uploadImg/{idUniversite}")
+    public Universite addImg(@RequestParam("file") MultipartFile file , @PathVariable("idUniversite") long idUniversite) {
+
+        Universite universite = universiteRepository.findById(idUniversite).get();
+        System.out.println("OK");
+
+        try {
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            Image FileDB = new Image(fileName, file.getContentType(), file.getBytes());
+            //FileDB.setUniversite(universite);
+            Image img = imageRepositroy.save(FileDB);
+            universite.setImage(img);
+            universite.setImagebyte(file.getBytes());
+            universiteRepository.save(universite);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return universite;
     }
 
     @GetMapping("findUniversiteByEmailAgent/{email}")

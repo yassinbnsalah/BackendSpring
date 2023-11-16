@@ -16,4 +16,5 @@ public interface IChamberService {
     void deleteByID(long id);
     void delete(Chamber c);
     List<Chamber> findChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite);
+    List<Chamber> findAvailableChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite);
 }

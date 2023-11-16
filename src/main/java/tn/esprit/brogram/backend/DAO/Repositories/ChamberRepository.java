@@ -11,4 +11,5 @@ public interface ChamberRepository extends JpaRepository<Chamber,Long> {
   //  Chamber findByRes(Set<Reservation> r);
     Chamber findChamberByResIdReservation(String id);
     List<Chamber> findChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite);
+    Chamber findChamberByNumerochamber(long numero);
 }

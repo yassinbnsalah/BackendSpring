@@ -12,7 +12,7 @@ import tn.esprit.brogram.backend.Services.IBlocService;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("BlocRestController")
@@ -25,6 +25,10 @@ public class BlocRestController {
         return iBlocService.findAll();
     }
 
+    @GetMapping("findBLocByFoyer/{id}")
+    List<Bloc> findBlocByFoyer(@PathVariable("id") long id){
+        return iBlocService.findBlocByFoyer_IdFoyer(id);
+    }
     @PostMapping("addBloc/{name}")
     Bloc AddBloc(@RequestBody Bloc b , @PathVariable("name") String name){
         Universite u = universiteRepository.findUnBynomUniversite(name) ;

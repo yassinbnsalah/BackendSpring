@@ -3,14 +3,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.brogram.backend.DAO.Entities.Chamber;
 import tn.esprit.brogram.backend.DAO.Entities.Reservation;
+import tn.esprit.brogram.backend.DAO.Entities.TypeChamber;
 import tn.esprit.brogram.backend.DAO.Repositories.ChamberRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.ReservationRepository;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @Service
@@ -72,5 +71,27 @@ public class ChamberService implements IChamberService{
     @Override
     public List<Chamber> findChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite) {
         return chamberRepository.findChamberByBlocFoyerUniversiteNomUniversite(nomUniversite);
+    }
+
+    @Override
+    public List<Chamber> findAvailableChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite) {
+        List<Chamber> chambers  =chamberRepository.findChamberByBlocFoyerUniversiteNomUniversite(nomUniversite);
+        List<Chamber> finalChambers  = new ArrayList<>( );
+        for (Chamber c :chambers){
+            boolean test = false ;
+            Set<Reservation> reservations = c.getRes();
+            int i = (int) reservations.stream().filter(Reservation::getEstValide).count();
+            if(c.getTypeC().equals(TypeChamber.Simple)&&i==0){
+                test = true ;
+            }else if (c.getTypeC().equals(TypeChamber.Double) && i<=1){
+                test = true ;
+            }else if (c.getTypeC().equals(TypeChamber.Triple) && i<=2){
+                test = true ;
+            }
+            if(test){
+                finalChambers.add(c);
+            }
+        }
+        return finalChambers;
     }
 }

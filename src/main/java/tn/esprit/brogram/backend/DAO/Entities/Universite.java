@@ -39,4 +39,12 @@ public class Universite {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Foyer foyer ;
+
+    @Lob
+    @Column(name = "imagebyte", length = 100000)  // Adjust the length as needed
+    private byte[] imagebyte;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
+
 }

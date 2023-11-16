@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,5 +42,5 @@ public class Chamber {
     Bloc bloc ;
 
     @OneToMany(cascade =  CascadeType.ALL)
-    private  Set<Reservation> res  ;
+    private  Set<Reservation> res  = new HashSet<>();
 }

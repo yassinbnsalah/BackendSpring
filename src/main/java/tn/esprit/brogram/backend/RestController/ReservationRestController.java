@@ -25,7 +25,7 @@ public class ReservationRestController {
             System.out.println("hello");
         List<Reservation> reservations = new ArrayList<>();
         chambers.forEach(chamber -> {
-            System.out.println(chamber.toString());
+            System.out.println(chamber.getNumerochamber());
             reservations.addAll(chamber.getRes());
         });
         return reservations ;
@@ -45,16 +45,17 @@ public class ReservationRestController {
         return iReservationService.findReservationByEmailEtudiant(email);
     }
 
-    @PostMapping("addReservation")
-    Reservation addReservation(@RequestBody Reservation r){
+    @PostMapping ("addReservation/{numerochamber}/{cin}")
+    Reservation addReservation( @PathVariable("numerochamber") long numero ,
+                               @PathVariable("cin") long cin){
 
-        Set<User> e = r.getEtudiants() ;
+        /*Set<User> e = r.getEtudiants() ;
 
         r.setAnneeReservation(new Date());
         User[] names = e.toArray(new User[e.size()]);
-        r.setIdReservation(names[0].getNomEt()+r.getAnneeReservation().getTime());
+        r.setIdReservation(names[0].getNomEt()+r.getAnneeReservation().getTime());*/
         //return r;
-        return iReservationService.addReservation(r);
+        return iReservationService.addReservation( numero , cin);
     }
 
     @PostMapping("addAllReservation")

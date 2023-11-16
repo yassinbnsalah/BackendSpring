@@ -21,6 +21,14 @@ public class ChamberRestController {
     @Autowired
     ChamberRepository chamberRepo;
 
+    @GetMapping("findChambersbyUniversite/{nom}")
+    List<Chamber> findChambersbyUniversite(@PathVariable("nom") String nom){
+        return iChamberService.findChamberByBlocFoyerUniversiteNomUniversite(nom);
+    }
+    @GetMapping("findAvailableChambersbyUniversite/{nom}")
+    List<Chamber> findAvailableChambersbyUniversite(@PathVariable("nom") String nom){
+        return iChamberService.findAvailableChamberByBlocFoyerUniversiteNomUniversite(nom);
+    }
     @GetMapping("findAllChambers")
     List<Chamber> findAll(){
         return iChamberService.findAll();
