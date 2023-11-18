@@ -46,7 +46,10 @@ public class BlocService implements IBlocService{
     public void delete(Bloc b) {
         blocRepository.delete(b);
     }
-
+    @Override
+    public Bloc findBlocByChamber_IdChamber(long idChamber) {
+        return blocRepository.findBlocByChambers_IdChamber(idChamber);
+    }
     @Override
     public List<Bloc> findBlocByFoyer_IdFoyer(long idFoyer) {
         return blocRepository.findBlocByFoyer_IdFoyer(idFoyer);

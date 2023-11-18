@@ -24,7 +24,10 @@ public class BlocRestController {
     List<Bloc> findAll(){
         return iBlocService.findAll();
     }
-
+    @GetMapping("findBLocByChamber/{id}")
+    Bloc findBlocByChamber(@PathVariable("id") long id){
+        return iBlocService.findBlocByChamber_IdChamber(id);
+    }
     @GetMapping("findBLocByFoyer/{id}")
     List<Bloc> findBlocByFoyer(@PathVariable("id") long id){
         return iBlocService.findBlocByFoyer_IdFoyer(id);

@@ -13,6 +13,6 @@ public interface IBlocService {
     Bloc findById(long id);
     void deleteByID(long id);
     void delete(Bloc b) ;
-
+    Bloc findBlocByChamber_IdChamber(long idChamber);
     List<Bloc> findBlocByFoyer_IdFoyer(long idFoyer);
 }

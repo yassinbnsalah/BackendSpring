@@ -45,16 +45,9 @@ public class ReservationRestController {
         return iReservationService.findReservationByEmailEtudiant(email);
     }
 
-    @PostMapping ("addReservation/{numerochamber}/{cin}")
-    Reservation addReservation( @PathVariable("numerochamber") long numero ,
-                               @PathVariable("cin") long cin){
-
-        /*Set<User> e = r.getEtudiants() ;
-
-        r.setAnneeReservation(new Date());
-        User[] names = e.toArray(new User[e.size()]);
-        r.setIdReservation(names[0].getNomEt()+r.getAnneeReservation().getTime());*/
-        //return r;
+    @PostMapping ("addReservation/{numerochamber}")
+    Set<Reservation> addReservation( @PathVariable("numerochamber") long numero ,
+                               @RequestBody  List<Long> cin){
         return iReservationService.addReservation( numero , cin);
     }
 

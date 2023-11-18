@@ -8,4 +8,5 @@ import java.util.List;
 public interface BlocRepository extends JpaRepository<Bloc,Long> {
 
     List<Bloc> findBlocByFoyer_IdFoyer(long idFoyer);
+    Bloc findBlocByChambers_IdChamber(long idChamber);
 }

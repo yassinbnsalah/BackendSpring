@@ -4,9 +4,10 @@ import tn.esprit.brogram.backend.DAO.Entities.Reservation;
 import tn.esprit.brogram.backend.DAO.Entities.StateReservation;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IReservationService {
-    Reservation addReservation(long numero , long cin);
+    Set<Reservation> addReservation(long numero , List<Long> cin);
     List<Reservation> addAllReservation(List<Reservation> ls);
     Reservation editReservation(Reservation r);
     Reservation updateReservationState(String id , StateReservation status);
