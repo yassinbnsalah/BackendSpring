@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Chamber;
 import tn.esprit.brogram.backend.DAO.Entities.Reservation;
+import tn.esprit.brogram.backend.DAO.Entities.TypeChamber;
 import tn.esprit.brogram.backend.DAO.Repositories.ChamberRepository;
 import tn.esprit.brogram.backend.Services.IChamberService;
 
@@ -66,4 +67,17 @@ public class ChamberRestController {
     void DeleteChmber(@RequestBody Chamber c){
         iChamberService.delete(c);
     }
+    @GetMapping("getChamberList/{nomBloc}")
+    List<Chamber> getChambresParNomBloc(@PathVariable("nomBloc") String nomBloc){
+        return iChamberService.getChambresParNomBloc(nomBloc);
+    }
+    @GetMapping("nbChambreParTypeEtBloc/{type}/{idBloc}")
+    long nbChambreParTypeEtBloc(@PathVariable("type") TypeChamber type , @PathVariable("idBloc") long idBloc){
+        return iChamberService.nbChambreParTypeEtBloc(type , idBloc);
+    }
+    @GetMapping("chamberListNonReserver/{type}/{nomFoyer}")
+    List<Chamber> getChambresNonReserveParNomFoyerEtTypeChambre(@PathVariable("type") TypeChamber type, @PathVariable("nomFoyer") String nomFoyer) {
+        return iChamberService.getChambresNonReserveParNomFoyerEtTypeChambre(nomFoyer, type);
+    }
+
 }

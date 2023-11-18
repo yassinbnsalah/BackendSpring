@@ -6,6 +6,8 @@ import tn.esprit.brogram.backend.DAO.Repositories.BlocRepository;
 
 
 import java.util.List;
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class BlocService implements IBlocService{
@@ -45,5 +47,16 @@ public class BlocService implements IBlocService{
     @Override
     public void delete(Bloc b) {
         blocRepository.delete(b);
+    }
+    //ByWiWi
+    @Override
+    public String getBlocNameById(long idBloc) {
+        Optional<Bloc> blocOptional = blocRepository.findById(idBloc);
+        return blocOptional.map(Bloc::getNomBloc).orElse(null);
+    }
+    //ByWiWi
+    @Override
+    public Bloc findBlocByChamber_IdChamber(long idChamber) {
+        return blocRepository.findBlocByChambers_IdChamber(idChamber);
     }
 }

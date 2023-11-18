@@ -3,6 +3,7 @@ import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Bloc;
 import tn.esprit.brogram.backend.DAO.Entities.Foyer;
@@ -56,5 +57,17 @@ public class BlocRestController {
     @DeleteMapping("delete")
     void delete(@RequestBody Bloc b){
         iBlocService.delete(b);
+    }
+
+    //ByWiWi
+    @GetMapping("getBlocNameById/{idBloc}")
+    public ResponseEntity<String> getBlocNameById(@PathVariable long idBloc) {
+        String blocName = iBlocService.getBlocNameById(idBloc);
+        return ResponseEntity.ok(blocName);
+    }
+    //ByWiWi
+    @GetMapping("findBLocByChamber/{id}")
+    Bloc findBlocByChamber(@PathVariable("id") long id){
+        return iBlocService.findBlocByChamber_IdChamber(id);
     }
 }
