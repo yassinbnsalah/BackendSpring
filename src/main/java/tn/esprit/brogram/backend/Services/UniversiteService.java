@@ -57,4 +57,12 @@ public class UniversiteService implements IUniversiteService{
     public Universite findUniversiteByEmail(String email) {
         return universiteRepository.findUniversiteByEmail(email);
     }
+
+    @Override
+    public List<Universite> getAcceptedUniversites() {
+        return universiteRepository.findByStatuts("Accepté");
+
+    }
+
+
 }

@@ -108,4 +108,8 @@ public class UniversiteRestController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/acceptedUniversite")
+    public List<Universite> getAcceptedUniversites() {
+        return iUniversiteServices.getAcceptedUniversites();
+    }
 }
