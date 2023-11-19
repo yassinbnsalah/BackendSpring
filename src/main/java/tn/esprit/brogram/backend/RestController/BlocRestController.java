@@ -13,10 +13,10 @@ import tn.esprit.brogram.backend.Services.IBlocService;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
-    @RequestMapping("BlocRestController")
+@RequestMapping("BlocRestController")
 public class BlocRestController {
     @Autowired
     IBlocService iBlocService ;
