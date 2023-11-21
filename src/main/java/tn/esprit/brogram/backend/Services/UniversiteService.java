@@ -2,8 +2,10 @@ package tn.esprit.brogram.backend.Services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import tn.esprit.brogram.backend.DAO.Entities.Rating;
 import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
+import tn.esprit.brogram.backend.DAO.Repositories.RatingRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 
 import java.util.List;
@@ -63,6 +65,34 @@ public class UniversiteService implements IUniversiteService{
         return universiteRepository.findByStatuts("Accepté");
 
     }
+
+  /*  RatingRepository ratingRepository;
+    @Override
+    public Universite addRatingToUniversite(long universiteId, Rating rating) {
+        Universite universite = universiteRepository.findById(universiteId)
+                .orElseThrow(() -> new RuntimeException("Universite not found"));
+
+        rating.setUniversite(universite);
+        Rating savedRating = ratingRepository.save(rating);
+
+        universite.getRatings().add(savedRating);
+        universiteRepository.save(universite);
+
+        return universite;    }
+
+    @Override
+    public Double calculateAverageRating(long universiteId) {
+        Universite universite = universiteRepository.findById(universiteId)
+                .orElseThrow(() -> new RuntimeException("Universite not found"));
+
+        List<Rating> ratings = universite.getRatings();
+
+        if (ratings.isEmpty()) {
+            return 0.0;
+        }
+
+        double sum = ratings.stream().mapToDouble(Rating::getStars).sum();
+        return sum / ratings.size();    }*/
 
 
 }

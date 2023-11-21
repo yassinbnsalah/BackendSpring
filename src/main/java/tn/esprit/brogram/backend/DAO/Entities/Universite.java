@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="universite")
 @Getter
@@ -46,5 +49,8 @@ public class Universite {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Image image;
+
+   // @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
+    // private List<Rating> ratings = new ArrayList<>();
 
 }

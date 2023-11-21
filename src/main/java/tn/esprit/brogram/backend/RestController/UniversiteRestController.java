@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.brogram.backend.DAO.Entities.*;
 import tn.esprit.brogram.backend.DAO.Repositories.ImageRepositroy;
+import tn.esprit.brogram.backend.DAO.Repositories.RatingRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UserRepository;
 import tn.esprit.brogram.backend.Services.IUniversiteService;
@@ -59,7 +60,9 @@ public class UniversiteRestController {
     }
     @GetMapping("findAll")
     List<Universite> UnifindAll(){
+        System.out.println("Ok");
         return iUniversiteServices.UnifindAll();
+
     }
 
 
@@ -71,6 +74,7 @@ public class UniversiteRestController {
     Universite editUniversite(@RequestBody Universite u){
         return iUniversiteServices.editUniversite(u);
     }
+
     @GetMapping("findById/{id}")
     Universite UnifindById(@PathVariable("id") long id){
         return iUniversiteServices.UnifindById(id);
@@ -112,4 +116,33 @@ public class UniversiteRestController {
     public List<Universite> getAcceptedUniversites() {
         return iUniversiteServices.getAcceptedUniversites();
     }
+
+    //RatingAPI
+    @Autowired
+    RatingRepository ratingRepository;
+
+    /*@PostMapping("/addRating/{universiteId}")
+    public ResponseEntity<Rating> addRating(@PathVariable long universiteId, @RequestBody Rating rating) {
+        Universite universite = iUniversiteServices.UnifindById(universiteId);
+        rating.setUniversite(universite);
+        Rating savedRating = ratingRepository.save(rating);
+        return new ResponseEntity<>(savedRating, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getAverageRating/{universiteId}")
+    public ResponseEntity<Double> getAverageRating(@PathVariable long universiteId) {
+        Universite universite = iUniversiteServices.UnifindById(universiteId);
+        List<Rating> ratings = universite.getRatings();
+
+        if (ratings.isEmpty()) {
+            return new ResponseEntity<>(0.0, HttpStatus.OK);
+        }
+
+        double sum = ratings.stream().mapToDouble(Rating::getStars).sum();
+        double averageRating = sum / ratings.size();
+
+        return new ResponseEntity<>(averageRating, HttpStatus.OK);
+    }*/
+
+
 }

@@ -1,5 +1,6 @@
 package tn.esprit.brogram.backend.Services;
 
+import tn.esprit.brogram.backend.DAO.Entities.Rating;
 import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
 
@@ -15,8 +16,11 @@ public interface IUniversiteService {
     void Unidelete(Universite u);
     Universite updateStatus(long id, String status);
     Universite findUniversiteByEmail(String email);
-
     List<Universite> getAcceptedUniversites();
+
+   // Universite addRatingToUniversite(long universiteId, Rating rating);
+
+ //   Double calculateAverageRating(long universiteId);
 
 
 }
