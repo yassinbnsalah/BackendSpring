@@ -5,6 +5,7 @@ import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUniversiteService {
     Universite addUniversite(Universite u);
@@ -22,5 +23,8 @@ public interface IUniversiteService {
 
  //   Double calculateAverageRating(long universiteId);
 
+    Universite affecterFoyerAUniversite (long idFoyer, String nomUniversite) ;
+    Universite desaffecterFoyerAUniversite(long idUniversite);
+    Optional<Universite> getUniversiteWithStudentCount(long universiteId);
 
 }

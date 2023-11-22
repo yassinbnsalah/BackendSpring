@@ -33,4 +33,8 @@ public class Etudiant {
     @JsonIgnore
     @ManyToMany(mappedBy = "etudiants" , cascade =  CascadeType.ALL)
     private Set<Reservation> reservations ;*/
+
+    @ManyToOne
+    @JoinColumn(name = "universite_id")
+    private Universite universite;
 }

@@ -19,6 +19,8 @@ import tn.esprit.brogram.backend.Services.IUniversiteService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+
 @CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
@@ -144,5 +146,27 @@ public class UniversiteRestController {
         return new ResponseEntity<>(averageRating, HttpStatus.OK);
     }*/
 
+    @PutMapping("/affecterFoyer/{idFoyer}/{nomUniversite}")
+    public ResponseEntity<String> affecterFoyerAUniversite(
+            @PathVariable("idFoyer") long idFoyer,
+            @PathVariable("nomUniversite") String nomUniversite) {
 
+        Universite universite = iUniversiteServices.affecterFoyerAUniversite(idFoyer, nomUniversite);
+
+        if (universite != null) {
+            return ResponseEntity.ok("Foyer affecté avec succès à l'université.");
+        } else {
+            return ResponseEntity.badRequest().body("Erreur lors de l'affectation du foyer à l'université.");
+        }
+    }
+    @PutMapping("desaffecterUniversite/{idUnive}")
+    Universite descaffecterFoyer(@PathVariable("idUnive")long id){
+        iUniversiteServices.desaffecterFoyerAUniversite(id);
+        return iUniversiteServices.desaffecterFoyerAUniversite(id);
+    }
+    @GetMapping("/{universiteId}")
+    public ResponseEntity<?> getUniversiteWithStudentCount(@PathVariable long universiteId) {
+        Optional<Universite> universiteOptional = iUniversiteServices.getUniversiteWithStudentCount(universiteId);
+        return universiteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

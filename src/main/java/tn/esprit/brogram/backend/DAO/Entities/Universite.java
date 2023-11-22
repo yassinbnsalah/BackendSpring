@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="universite")
@@ -52,5 +53,12 @@ public class Universite {
 
    // @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
     // private List<Rating> ratings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
+    private Set<Etudiant> etudiants;
+    @Transient
+    public long getEnrolledStudentCount() {
+        return etudiants.size();
+    }
 
 }

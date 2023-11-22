@@ -2,17 +2,23 @@ package tn.esprit.brogram.backend.Services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import tn.esprit.brogram.backend.DAO.Entities.Foyer;
 import tn.esprit.brogram.backend.DAO.Entities.Rating;
 import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
+import tn.esprit.brogram.backend.DAO.Repositories.FoyerRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.RatingRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class UniversiteService implements IUniversiteService{
     UniversiteRepository universiteRepository ;
+    FoyerRepository foyerRepository ;
+
     @Override
     public Universite addUniversite(Universite u) {
         return universiteRepository.save(u);
@@ -64,6 +70,34 @@ public class UniversiteService implements IUniversiteService{
     public List<Universite> getAcceptedUniversites() {
         return universiteRepository.findByStatuts("Accepté");
 
+    }
+
+    @Override
+    public Universite affecterFoyerAUniversite(long idFoyer, String nomUniversite) {
+        Foyer f = foyerRepository.findById(idFoyer).get();
+        Universite u = universiteRepository.findUnBynomUniversite(nomUniversite);
+        u.setFoyer(f);
+        universiteRepository.save(u);
+        return u;
+    }
+
+    @Override
+    public Universite desaffecterFoyerAUniversite(long idUniversite) {
+        Universite u = universiteRepository.findById(idUniversite).get();
+        u.setFoyer(null);
+        universiteRepository.save(u);
+        return u;    }
+
+    @Override
+    public Optional<Universite> getUniversiteWithStudentCount(long universiteId) {
+        Optional<Universite> universiteOptional = universiteRepository.findByIdWithStudents(universiteId);
+
+        universiteOptional.ifPresent(universite -> {
+            long enrolledStudentCount = universite.getEnrolledStudentCount();
+            System.out.println("Enrolled Student Count: " + enrolledStudentCount);
+        });
+
+        return universiteOptional;
     }
 
   /*  RatingRepository ratingRepository;
