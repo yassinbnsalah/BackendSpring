@@ -17,4 +17,7 @@ public interface IBlocService {
     String getBlocNameById(long idBloc);
     //ByWiWi
     Bloc findBlocByChamber_IdChamber(long idChamber);
+
+    //by wiwi
+    boolean doesBlocExist(String nomBloc);
 }

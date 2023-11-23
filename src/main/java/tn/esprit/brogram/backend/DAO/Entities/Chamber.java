@@ -36,6 +36,9 @@ public class Chamber {
 
     @Column(name="UpdatedAt")
     private Date UpdatedAt;
+    @Lob
+    @Column(name = "imagebyte", length = 100000)  // Adjust the length as needed
+    private byte[] imagebyte;
 
     @JsonIgnore
     @ManyToOne

@@ -19,4 +19,7 @@ public interface IChamberService {
     List<Chamber> getChambresParNomBloc( String nomBloc) ;
     long nbChambreParTypeEtBloc(TypeChamber type, long idBloc) ;
     List<Chamber> getChambresNonReserveParNomFoyerEtTypeChambre( String nomFoyer,TypeChamber type) ;
+
+    List<Chamber> getChambersByType(TypeChamber type);
+
 }

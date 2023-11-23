@@ -16,4 +16,9 @@ public interface ChamberRepository extends JpaRepository<Chamber,Long> {
 
   int countChamberByTypeCAndBloc_IdBloc(TypeChamber typeChamber , long idBloc);
   List<Chamber> findChamberByBlocFoyerNomFoyerAndTypeCAndRes_Empty(String NomFoyer , TypeChamber type);
+
+
+  List<Chamber> findByTypeC(TypeChamber type);
+
+
 }

@@ -87,4 +87,11 @@ public class ChamberService implements IChamberService{
     public List<Chamber> getChambresNonReserveParNomFoyerEtTypeChambre(String nomFoyer, TypeChamber type) {
         return chamberRepository.findChamberByBlocFoyerNomFoyerAndTypeCAndRes_Empty(nomFoyer,type);
     }
+
+    @Override
+    public List<Chamber> getChambersByType(TypeChamber type) {
+        return chamberRepository.findByTypeC(type);
+    }
+
+
 }

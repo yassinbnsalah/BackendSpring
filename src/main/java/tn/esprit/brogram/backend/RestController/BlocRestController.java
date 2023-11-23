@@ -70,4 +70,11 @@ public class BlocRestController {
     Bloc findBlocByChamber(@PathVariable("id") long id){
         return iBlocService.findBlocByChamber_IdChamber(id);
     }
+
+    //by wiwi
+    @GetMapping("checkBlocExistence/{nomBloc}")
+    public ResponseEntity<Boolean> checkBlocExistence(@PathVariable String nomBloc) {
+        boolean exists = iBlocService.doesBlocExist(nomBloc);
+        return ResponseEntity.ok(exists);
+    }
 }

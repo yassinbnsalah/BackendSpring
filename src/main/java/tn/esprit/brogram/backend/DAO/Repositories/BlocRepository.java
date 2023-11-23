@@ -10,5 +10,6 @@ public interface BlocRepository extends JpaRepository<Bloc,Long> {
     Bloc getBlocByNomBloc(String nomBlog);
     //ByWiWi
     Bloc findBlocByChambers_IdChamber(long idChamber);
-
+//by wiwi
+boolean existsByNomBloc(String nomBloc);
 }

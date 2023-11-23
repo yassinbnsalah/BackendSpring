@@ -1,14 +1,19 @@
 package tn.esprit.brogram.backend.RestController;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.brogram.backend.DAO.Entities.Chamber;
+import tn.esprit.brogram.backend.DAO.Entities.Image;
 import tn.esprit.brogram.backend.DAO.Entities.Reservation;
 import tn.esprit.brogram.backend.DAO.Entities.TypeChamber;
 import tn.esprit.brogram.backend.DAO.Repositories.ChamberRepository;
+import tn.esprit.brogram.backend.DAO.Repositories.ImageRepository;
 import tn.esprit.brogram.backend.Services.IChamberService;
 
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +26,7 @@ public class ChamberRestController {
     IChamberService iChamberService ;
     @Autowired
     ChamberRepository chamberRepo;
+    ImageRepository imageRepositroy ;
 
     @GetMapping("findAllChambers")
     List<Chamber> findAll(){
@@ -78,6 +84,30 @@ public class ChamberRestController {
     @GetMapping("chamberListNonReserver/{type}/{nomFoyer}")
     List<Chamber> getChambresNonReserveParNomFoyerEtTypeChambre(@PathVariable("type") TypeChamber type, @PathVariable("nomFoyer") String nomFoyer) {
         return iChamberService.getChambresNonReserveParNomFoyerEtTypeChambre(nomFoyer, type);
+    }
+    @PostMapping("uploadImg/{idChamber}")
+    public Chamber addImg(@RequestParam("file") MultipartFile file , @PathVariable("idChamber") long idChamber) {
+
+        Chamber chamber = chamberRepo.findById(idChamber).get();
+        System.out.println("OK");
+
+        try {
+       //     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+         //   Image FileDB = new Image(fileName, file.getContentType(), file.getBytes());
+            //FileDB.setChamber(chamber);
+        //    Image img = imageRepositroy.save(FileDB);
+          //  chamber.setImage(img);
+            chamber.setImagebyte(file.getBytes());
+            chamberRepo.save(chamber);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return chamber;
+    }
+
+    @GetMapping("/getChambersByType/{type}")
+    public List<Chamber> getChambersByType(@PathVariable TypeChamber type) {
+        return iChamberService.getChambersByType(type);
     }
 
 }

@@ -59,4 +59,9 @@ public class BlocService implements IBlocService{
     public Bloc findBlocByChamber_IdChamber(long idChamber) {
         return blocRepository.findBlocByChambers_IdChamber(idChamber);
     }
+    //by wiwi
+    @Override
+    public boolean doesBlocExist(String nomBloc) {
+        return blocRepository.existsByNomBloc(nomBloc);
+    }
 }
