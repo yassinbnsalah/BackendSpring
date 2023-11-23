@@ -100,6 +100,11 @@ public class UniversiteService implements IUniversiteService{
         return universiteOptional;
     }
 
+    @Override
+    public Universite findUniversiteByNomUniversiteAndeAndEmail(String name, String email) {
+        return universiteRepository.findUniversiteByNomUniversiteAndeAndEmail(name,email);
+    }
+
   /*  RatingRepository ratingRepository;
     @Override
     public Universite addRatingToUniversite(long universiteId, Rating rating) {

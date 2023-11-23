@@ -169,4 +169,11 @@ public class UniversiteRestController {
         Optional<Universite> universiteOptional = iUniversiteServices.getUniversiteWithStudentCount(universiteId);
         return universiteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("findUniversiteByNomUnivAndEmail/{name,email}")
+    public Universite findUniversiteByNomUniversiteAndEmail(
+            @RequestParam("name") String name,
+            @RequestParam("email") String email) {
+            return iUniversiteServices.findUniversiteByNomUniversiteAndeAndEmail(name, email);
+        }
 }
