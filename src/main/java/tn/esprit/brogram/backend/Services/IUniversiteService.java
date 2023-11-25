@@ -27,5 +27,5 @@ public interface IUniversiteService {
     Universite desaffecterFoyerAUniversite(long idUniversite);
     Optional<Universite> getUniversiteWithStudentCount(long universiteId);
 
-    Universite findUniversiteByNomUniversiteAndeAndEmail(String name, String email);
+    Universite findUniversiteByNomUniversiteAndEmail(String name, String email);
 }
