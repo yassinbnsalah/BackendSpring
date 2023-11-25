@@ -28,4 +28,6 @@ public interface IUniversiteService {
     Optional<Universite> getUniversiteWithStudentCount(long universiteId);
 
     Universite findUniversiteByNomUniversiteAndEmail(String name, String email);
+
+    Universite UnifindByNomUniv(String nomUniversite);
 }

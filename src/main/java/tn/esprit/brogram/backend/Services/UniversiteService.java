@@ -105,6 +105,12 @@ public class UniversiteService implements IUniversiteService{
         return universiteRepository.findUniversiteByNomUniversiteAndEmail(name,email);
     }
 
+    @Override
+    public Universite UnifindByNomUniv(String nomUniversite) {
+        Universite universite = universiteRepository.findUnBynomUniversite(nomUniversite);
+        return universite != null ? universite : Universite.builder().build();    }
+
+
   /*  RatingRepository ratingRepository;
     @Override
     public Universite addRatingToUniversite(long universiteId, Rating rating) {

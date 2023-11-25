@@ -177,4 +177,9 @@ public class UniversiteRestController {
         return iUniversiteServices.findUniversiteByNomUniversiteAndEmail(name, email);
     }
 
+    @GetMapping("findByUniversiteNom/{name}")
+    Universite UnifindByUniversiteNom(@PathVariable("name") String nomUniversite){
+        return iUniversiteServices.UnifindByNomUniv(nomUniversite);
+    }
+
 }
