@@ -53,6 +53,10 @@ public class ChamberService implements IChamberService{
 
     @Override
     public Chamber findById(long id) {
+        Chamber c = chamberRepository.findById(id).orElse(Chamber.builder().idChamber(0).numerochamber(0).build());
+        if(c.getBloc() == null){
+            System.out.println("this chamber m3andehch blog ");
+        }
         return chamberRepository.findById(id).orElse(Chamber.builder().idChamber(0).numerochamber(0).build());
     }
 

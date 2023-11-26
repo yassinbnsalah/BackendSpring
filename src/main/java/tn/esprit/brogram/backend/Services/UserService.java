@@ -25,7 +25,14 @@ public class UserService implements IUserService {
     }
 
     public User findByEmail(String email) {
-        return this.userRepo.findByEmail(email);
+        if(this.userRepo.findByEmail(email) != null){
+
+            return this.userRepo.findByEmail(email);
+        }else{
+            User user = new User();
+            user.setId(0L);
+            return user ;
+        }
     }
 
     @Override

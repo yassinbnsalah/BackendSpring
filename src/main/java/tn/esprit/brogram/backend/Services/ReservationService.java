@@ -52,7 +52,7 @@ public class ReservationService implements IReservationService {
             returnedReservation.add(r);
 
 
-            emailService.sendMailReservationInformation(r,u);
+           // emailService.sendMailReservationInformation(r,u);
         }
 
 
