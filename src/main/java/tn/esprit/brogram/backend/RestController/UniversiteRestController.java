@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.brogram.backend.DAO.Entities.*;
 import tn.esprit.brogram.backend.DAO.Repositories.ImageRepositroy;
+import tn.esprit.brogram.backend.DAO.Repositories.RatingRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UserRepository;
 import tn.esprit.brogram.backend.Services.IUniversiteService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+
 @CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
@@ -59,7 +62,9 @@ public class UniversiteRestController {
     }
     @GetMapping("findAll")
     List<Universite> UnifindAll(){
+        System.out.println("Ok");
         return iUniversiteServices.UnifindAll();
+
     }
 
 
@@ -71,6 +76,7 @@ public class UniversiteRestController {
     Universite editUniversite(@RequestBody Universite u){
         return iUniversiteServices.editUniversite(u);
     }
+
     @GetMapping("findById/{id}")
     Universite UnifindById(@PathVariable("id") long id){
         return iUniversiteServices.UnifindById(id);
@@ -112,4 +118,68 @@ public class UniversiteRestController {
     public List<Universite> getAcceptedUniversites() {
         return iUniversiteServices.getAcceptedUniversites();
     }
+
+    //RatingAPI
+    @Autowired
+    RatingRepository ratingRepository;
+
+    /*@PostMapping("/addRating/{universiteId}")
+    public ResponseEntity<Rating> addRating(@PathVariable long universiteId, @RequestBody Rating rating) {
+        Universite universite = iUniversiteServices.UnifindById(universiteId);
+        rating.setUniversite(universite);
+        Rating savedRating = ratingRepository.save(rating);
+        return new ResponseEntity<>(savedRating, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getAverageRating/{universiteId}")
+    public ResponseEntity<Double> getAverageRating(@PathVariable long universiteId) {
+        Universite universite = iUniversiteServices.UnifindById(universiteId);
+        List<Rating> ratings = universite.getRatings();
+
+        if (ratings.isEmpty()) {
+            return new ResponseEntity<>(0.0, HttpStatus.OK);
+        }
+
+        double sum = ratings.stream().mapToDouble(Rating::getStars).sum();
+        double averageRating = sum / ratings.size();
+
+        return new ResponseEntity<>(averageRating, HttpStatus.OK);
+    }*/
+
+    @PutMapping("/affecterFoyer/{idFoyer}/{nomUniversite}")
+    public ResponseEntity<String> affecterFoyerAUniversite(
+            @PathVariable("idFoyer") long idFoyer,
+            @PathVariable("nomUniversite") String nomUniversite) {
+
+        Universite universite = iUniversiteServices.affecterFoyerAUniversite(idFoyer, nomUniversite);
+
+        if (universite != null) {
+            return ResponseEntity.ok("Foyer affecté avec succès à l'université.");
+        } else {
+            return ResponseEntity.badRequest().body("Erreur lors de l'affectation du foyer à l'université.");
+        }
+    }
+    @PutMapping("desaffecterUniversite/{idUnive}")
+    Universite descaffecterFoyer(@PathVariable("idUnive")long id){
+        iUniversiteServices.desaffecterFoyerAUniversite(id);
+        return iUniversiteServices.desaffecterFoyerAUniversite(id);
+    }
+   /* @GetMapping("/{universiteId}")
+    public ResponseEntity<?> getUniversiteWithStudentCount(@PathVariable long universiteId) {
+        Optional<Universite> universiteOptional = iUniversiteServices.getUniversiteWithStudentCount(universiteId);
+        return universiteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }*/
+
+    @GetMapping("/find/{name}/{email}")
+    public Universite findUniversiteByNomUniversiteAndEmail(
+            @PathVariable("name") String name,
+            @PathVariable("email") String email) {
+        return iUniversiteServices.findUniversiteByNomUniversiteAndEmail(name, email);
+    }
+
+    @GetMapping("findByUniversiteNom/{name}")
+    Universite UnifindByUniversiteNom(@PathVariable("name") String nomUniversite){
+        return iUniversiteServices.UnifindByNomUniv(nomUniversite);
+    }
+
 }
