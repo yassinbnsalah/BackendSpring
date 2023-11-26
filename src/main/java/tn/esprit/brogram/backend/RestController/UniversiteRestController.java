@@ -164,11 +164,11 @@ public class UniversiteRestController {
         iUniversiteServices.desaffecterFoyerAUniversite(id);
         return iUniversiteServices.desaffecterFoyerAUniversite(id);
     }
-    @GetMapping("/{universiteId}")
+   /* @GetMapping("/{universiteId}")
     public ResponseEntity<?> getUniversiteWithStudentCount(@PathVariable long universiteId) {
         Optional<Universite> universiteOptional = iUniversiteServices.getUniversiteWithStudentCount(universiteId);
         return universiteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+    }*/
 
     @GetMapping("/find/{name}/{email}")
     public Universite findUniversiteByNomUniversiteAndEmail(

@@ -56,9 +56,9 @@ public class Universite {
 
     @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
     private Set<Etudiant> etudiants;
-    @Transient
-    public long getEnrolledStudentCount() {
-        return etudiants.size();
-    }
+   // @Transient
+   // public long getEnrolledStudentCount() {
+     //   return etudiants.size();
+   // }
 
 }
