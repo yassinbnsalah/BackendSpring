@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
+import java.util.Date;
 import java.util.Set;
 
 
@@ -29,8 +29,15 @@ public class Bloc {
     @JsonIgnore
     @ManyToOne
     Foyer foyer ;
-
-
     @OneToMany(mappedBy = "bloc" , cascade = CascadeType.ALL)
-    private Set<Chamber> chambers = new HashSet<>();
+    @JsonManagedReference
+    private Set<Chamber> chambers;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at",nullable = false,updatable = false)
+    private Date createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", nullable = false)
+    private Date updatedAt;
+    private String description;
+    private String status;
 }
