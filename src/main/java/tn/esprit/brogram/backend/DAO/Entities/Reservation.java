@@ -1,9 +1,12 @@
 package tn.esprit.brogram.backend.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class Reservation {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +27,18 @@ public class Reservation {
 
     @Column(name="estValide")
     private Boolean estValide ;
+
+    @Column(name="dateDebut")
+    private LocalDate dateDebut ;
+
+    @Column(name="dateFin")
+    private LocalDate dateFin  ;
+
+    @Column(name="status")
+    private StateReservation status ;
+
     @ManyToMany(cascade = CascadeType.ALL)
-    public Set<Etudiant> etu ;
+    public Set<User> etudiants = new HashSet<>();
+
+
 }

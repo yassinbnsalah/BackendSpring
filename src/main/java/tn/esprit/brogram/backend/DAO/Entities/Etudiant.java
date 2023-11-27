@@ -1,4 +1,5 @@
 package tn.esprit.brogram.backend.DAO.Entities;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class Etudiant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +32,7 @@ public class Etudiant {
 
 
 
-    @ManyToMany(mappedBy = "etu" , cascade =  CascadeType.ALL)
-    private Set<Reservation> res ;
+   @ManyToOne
+   @JoinColumn(name = "universite_id")
+    private Universite universite;
 }

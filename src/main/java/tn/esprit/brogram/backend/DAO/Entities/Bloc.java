@@ -1,8 +1,12 @@
 package tn.esprit.brogram.backend.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -22,11 +26,11 @@ public class Bloc {
     private String nomBloc ;
     @Column(name="capaciteBloc")
     private int capaciteBloc ;
-
+    @JsonIgnore
     @ManyToOne
     Foyer foyer ;
 
 
     @OneToMany(mappedBy = "bloc" , cascade = CascadeType.ALL)
-    private Set<Chamber> chambers;
+    private Set<Chamber> chambers = new HashSet<>();
 }

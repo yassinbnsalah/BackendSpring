@@ -1,16 +1,20 @@
 package tn.esprit.brogram.backend.RestController;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Etudiant;
 import tn.esprit.brogram.backend.Services.IEtudiantService;
 
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
+@RequestMapping("EtudiantRestController")
 public class EtudiantRestController {
+    @Autowired
     IEtudiantService iEtudiantService;
+
     @GetMapping("findAllEtudiant")
     List<Etudiant> findAll(){
         return iEtudiantService.findAll();
