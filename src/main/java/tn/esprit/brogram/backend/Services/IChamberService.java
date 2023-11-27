@@ -22,4 +22,6 @@ public interface IChamberService {
 
     List<Chamber> getChambersByType(TypeChamber type);
 
+    List<Chamber> getChambersByTypeAndBlocName(TypeChamber type, String blocName);
+
 }

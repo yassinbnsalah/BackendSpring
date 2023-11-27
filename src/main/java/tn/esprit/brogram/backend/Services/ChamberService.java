@@ -93,5 +93,9 @@ public class ChamberService implements IChamberService{
         return chamberRepository.findByTypeC(type);
     }
 
+    @Override
+    public List<Chamber> getChambersByTypeAndBlocName(TypeChamber type, String blocName) {
+        return chamberRepository.findByTypeCAndBlocNomBloc(type, blocName);
+    }
 
 }

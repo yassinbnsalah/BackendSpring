@@ -77,4 +77,6 @@ public class BlocRestController {
         boolean exists = iBlocService.doesBlocExist(nomBloc);
         return ResponseEntity.ok(exists);
     }
+
+
 }

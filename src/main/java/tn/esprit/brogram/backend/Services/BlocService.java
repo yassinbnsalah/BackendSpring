@@ -64,4 +64,7 @@ public class BlocService implements IBlocService{
     public boolean doesBlocExist(String nomBloc) {
         return blocRepository.existsByNomBloc(nomBloc);
     }
+
+
+
 }

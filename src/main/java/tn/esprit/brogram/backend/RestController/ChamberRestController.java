@@ -1,6 +1,7 @@
 package tn.esprit.brogram.backend.RestController;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -110,4 +111,13 @@ public class ChamberRestController {
         return iChamberService.getChambersByType(type);
     }
 
+
+
+    @GetMapping("/byTypeAndBloc")
+    public ResponseEntity<List<Chamber>> getChambersByTypeAndBloc(
+            @RequestParam("type") TypeChamber type,
+            @RequestParam("blocName") String blocName) {
+        List<Chamber> chambers = iChamberService.getChambersByTypeAndBlocName(type, blocName);
+        return ResponseEntity.ok(chambers);
+    }
 }

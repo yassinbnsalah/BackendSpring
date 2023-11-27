@@ -20,5 +20,6 @@ public interface ChamberRepository extends JpaRepository<Chamber,Long> {
 
   List<Chamber> findByTypeC(TypeChamber type);
 
+  List<Chamber> findByTypeCAndBlocNomBloc(TypeChamber type, String blocName);
 
 }
