@@ -5,17 +5,21 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.brogram.backend.DAO.Entities.Bloc;
+import tn.esprit.brogram.backend.DAO.Entities.Chamber;
 import tn.esprit.brogram.backend.DAO.Entities.Foyer;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 import tn.esprit.brogram.backend.Services.IBlocService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-@CrossOrigin(origins = "*")
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("BlocRestController")
+@CrossOrigin(origins = "*")
+
 public class BlocRestController {
     @Autowired
     IBlocService iBlocService ;
@@ -24,6 +28,7 @@ public class BlocRestController {
     List<Bloc> findAll(){
         return iBlocService.findAll();
     }
+
     @GetMapping("findBLocByChamber/{id}")
     Bloc findBlocByChamber(@PathVariable("id") long id){
         return iBlocService.findBlocByChamber_IdChamber(id);
@@ -32,11 +37,21 @@ public class BlocRestController {
     List<Bloc> findBlocByFoyer(@PathVariable("id") long id){
         return iBlocService.findBlocByFoyer_IdFoyer(id);
     }
+
     @PostMapping("addBloc/{name}")
     Bloc AddBloc(@RequestBody Bloc b , @PathVariable("name") String name){
+        //add
         Universite u = universiteRepository.findUnBynomUniversite(name) ;
         Foyer f = u.getFoyer() ;
+        if(b.getChambers() != null){
+            for (Chamber chamber : b.getChambers()) {
+                chamber.setCreatedAt(new Date());
+                chamber.setUpdatedAt(new Date());
+            }
+        }
         b.setFoyer(f);
+        b.setCreatedAt(new Date());
+        b.setUpdatedAt(new Date());
         return iBlocService.addBloc(b);
     }
 

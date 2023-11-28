@@ -17,6 +17,6 @@ public interface UniversiteRepository extends JpaRepository<Universite,Long> {
     Universite findUniversiteByFoyerIdFoyer(long idFoyer);
     Universite findUniversiteByNomUniversiteAndEmail(String name, String email);
 
-    @Query("SELECT u FROM Universite u LEFT JOIN FETCH u.etudiants WHERE u.idUniversite = :universiteId")
-    Optional<Universite> findByIdWithStudents(@Param("universiteId") long universiteId);
+   /* @Query("SELECT u FROM Universite u LEFT JOIN FETCH u.etudiants WHERE u.idUniversite = :universiteId")
+    Optional<Universite> findByIdWithStudents(@Param("universiteId") long universiteId);*/
 }
