@@ -128,4 +128,9 @@ public class ChamberRestController {
         List<Chamber> chambers = iChamberService.getChambersByTypeAndBlocName(type, blocName);
         return ResponseEntity.ok(chambers);
     }
+    @PostMapping("/affecterBlocAChambre")
+    public ResponseEntity<?> affecterBlocAChambre(@RequestParam long idChamber, @RequestParam long idBloc) {
+        iChamberService.affecterBlocAChambre(idChamber, idBloc);
+        return ResponseEntity.ok().build();
+    }
 }

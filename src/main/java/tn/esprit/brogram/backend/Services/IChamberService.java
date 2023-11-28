@@ -29,4 +29,6 @@ public interface IChamberService {
     List<Chamber> findChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite);
     List<Chamber> findAvailableChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite);
 
+    void affecterBlocAChambre(long idChamber, long idBloc);
+
 }
