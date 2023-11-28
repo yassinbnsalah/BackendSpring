@@ -36,26 +36,30 @@ public class BlocRestController {
         b.setFoyer(f);
         return iBlocService.addBloc(b);
     }
-
+    ///ssss top
     @PostMapping("addAllBlocs")
     List<Bloc> addAllBlocs(@RequestBody List<Bloc> b){
         return iBlocService.addAllBlocs(b);
     }
+    ///ssss top
 
     @PutMapping("editBloc")
     Bloc editBloc(@RequestBody Bloc b){
         return iBlocService.editBloc(b);
     }
+    ///ssss top
 
     @GetMapping("findById/{id}")
     Bloc findById(@PathVariable("id") long id){
         return iBlocService.findById(id);
     }
+    ///ssss top
 
     @DeleteMapping("deleteByID/{id}")
     void deleteByID(@PathVariable("id") long id){
         iBlocService.deleteByID(id);
     }
+    ///ssss top
 
     @DeleteMapping("delete")
     void delete(@RequestBody Bloc b){
