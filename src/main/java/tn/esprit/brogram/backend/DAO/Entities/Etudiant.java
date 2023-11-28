@@ -30,7 +30,9 @@ public class Etudiant {
     @Column(name="dateNaissance")
     private LocalDate dateNaissance ;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "etudiants" , cascade =  CascadeType.ALL)
-    private Set<Reservation> reservations ;
+
+
+   @ManyToOne
+   @JoinColumn(name = "universite_id")
+    private Universite universite;
 }

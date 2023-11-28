@@ -12,6 +12,7 @@ import java.util.Set;
 public interface ChamberRepository extends JpaRepository<Chamber,Long> {
   //  Chamber findByRes(Set<Reservation> r);
     Chamber findChamberByResIdReservation(String id);
+
   List<Chamber> findByBloc(Bloc b);
 
   int countChamberByTypeCAndBloc_IdBloc(TypeChamber typeChamber , long idBloc);
@@ -21,5 +22,8 @@ public interface ChamberRepository extends JpaRepository<Chamber,Long> {
   List<Chamber> findByTypeC(TypeChamber type);
 
   List<Chamber> findByTypeCAndBlocNomBloc(TypeChamber type, String blocName);
+    List<Chamber> findChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite);
+    Chamber findChamberByNumerochamber(long numero);
+
 
 }

@@ -1,16 +1,22 @@
 package tn.esprit.brogram.backend.DAO.Entities;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Table(name="image")
 @Builder
+
+@Entity
+
 public class Image {
 
     @Id
@@ -37,4 +43,6 @@ public class Image {
     @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
     private Universite universite;
 */
+
 }
+

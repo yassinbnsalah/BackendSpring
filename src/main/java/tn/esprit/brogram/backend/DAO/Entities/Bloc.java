@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.Date;
 import java.util.Set;
 
 
@@ -30,8 +31,15 @@ public class Bloc {
     @JsonIgnore
     @ManyToOne
     Foyer foyer ;
-
-
     @OneToMany(mappedBy = "bloc" , cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<Chamber> chambers;
+
+    @Column(name = "created_at",nullable = true,updatable = true)
+    private Date createdAt;
+
+    @Column(name = "updated_at", nullable = true)
+    private Date updatedAt;
+    private String description;
+    private String status;
 }

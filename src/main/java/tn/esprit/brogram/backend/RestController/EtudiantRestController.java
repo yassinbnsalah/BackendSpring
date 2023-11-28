@@ -7,7 +7,7 @@ import tn.esprit.brogram.backend.Services.IEtudiantService;
 
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("EtudiantRestController")

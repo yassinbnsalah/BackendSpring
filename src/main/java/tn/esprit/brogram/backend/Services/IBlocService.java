@@ -13,6 +13,7 @@ public interface IBlocService {
     Bloc findById(long id);
     void deleteByID(long id);
     void delete(Bloc b) ;
+
     //ByWiWi
     String getBlocNameById(long idBloc);
     //ByWiWi
@@ -21,5 +22,9 @@ public interface IBlocService {
     //by wiwi
     boolean doesBlocExist(String nomBloc);
 
+
+
+
+    List<Bloc> findBlocByFoyer_IdFoyer(long idFoyer);
 
 }

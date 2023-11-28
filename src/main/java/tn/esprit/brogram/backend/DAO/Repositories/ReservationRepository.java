@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation,String> {
     //List<Reservation> findReservationByEtudiantsidEtudiant(int id);
-
+    List<Reservation> findReservationByEtudiants_email(String email);
+   // List<Reservation> findReservationByChamberBlocFoyerUniversitenomUniversite(String nomUniversite);
 
 
 }

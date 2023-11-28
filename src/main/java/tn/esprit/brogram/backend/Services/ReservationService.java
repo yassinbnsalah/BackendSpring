@@ -1,10 +1,13 @@
 package tn.esprit.brogram.backend.Services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.brogram.backend.DAO.Entities.Reservation;
-import tn.esprit.brogram.backend.DAO.Entities.StateReservation;
+import tn.esprit.brogram.backend.DAO.Entities.*;
+import tn.esprit.brogram.backend.DAO.Repositories.ChamberRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.ReservationRepository;
+import tn.esprit.brogram.backend.DAO.Repositories.UserRepository;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +15,37 @@ import java.util.Optional;
 @Service
 public class ReservationService implements IReservationService {
     ReservationRepository reservationRepository ;
+    ChamberRepository chamberRepository ;
+    UserRepository userRepository ;
 
     @Override
-    public Reservation addReservation(Reservation r) {
+    public Reservation addReservation(long numero , long cin) {
+        /*********** GENERATE id ***********/
+        LocalDate dateDebutAU;
+        LocalDate dateFinAU;
+        int year = LocalDate.now().getYear() % 100;
+        if (LocalDate.now().getMonthValue() <= 7) {
+            dateDebutAU = LocalDate.of(Integer.parseInt("20" + (year - 1)), 9, 15);
+            dateFinAU = LocalDate.of(Integer.parseInt("20" + year), 6, 30);
+        } else {
+            dateDebutAU = LocalDate.of(Integer.parseInt("20" + year), 9, 15);
+            dateFinAU = LocalDate.of(Integer.parseInt("20" + (year + 1)), 6, 30);
+        }
+        /**************************************************/
+        Chamber c = chamberRepository.findChamberByNumerochamber(numero);
+        User u = userRepository.findEtudiantsByCin(cin);
+        Reservation r = new Reservation();
+        r.setIdReservation(dateDebutAU.getYear()+"-"+dateFinAU.getYear()+"-"+c.getBloc().getNomBloc()
+                +"-"+c.getNumerochamber()+"-"+cin);
+
+        r.setAnneeReservation(new Date());
+        r.setDateDebut(dateDebutAU);
+        r.setDateFin(dateFinAU);
+        r.setEstValide(true);
+        c.getRes().add(r);
+        chamberRepository.save(c);
+        r.getEtudiants().add(u);
+
         return reservationRepository.save(r);
     }
 
@@ -39,6 +70,11 @@ public class ReservationService implements IReservationService {
     @Override
     public List<Reservation> findAllReservations() {
         return reservationRepository.findAll();
+    }
+
+    @Override
+    public List<Reservation> findReservationByEmailEtudiant(String email) {
+        return reservationRepository.findReservationByEtudiants_email(email);
     }
 
     @Override

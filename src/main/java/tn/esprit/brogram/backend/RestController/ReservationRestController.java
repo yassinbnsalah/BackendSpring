@@ -2,11 +2,11 @@ package tn.esprit.brogram.backend.RestController;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.brogram.backend.DAO.Entities.Etudiant;
-import tn.esprit.brogram.backend.DAO.Entities.Reservation;
-import tn.esprit.brogram.backend.DAO.Entities.StateReservation;
+import tn.esprit.brogram.backend.DAO.Entities.*;
+import tn.esprit.brogram.backend.Services.IChamberService;
 import tn.esprit.brogram.backend.Services.IReservationService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +18,18 @@ import java.util.Set;
 public class ReservationRestController {
     @Autowired
     IReservationService iReservationService;
-
+    IChamberService iChamberService;
+        @GetMapping("findReservationByUniversiteName/{name}")
+    List<Reservation> findReservationByUniversiteName(@PathVariable("name") String name){
+        List<Chamber> chambers = iChamberService.findChamberByBlocFoyerUniversiteNomUniversite(name);
+            System.out.println("hello");
+        List<Reservation> reservations = new ArrayList<>();
+        chambers.forEach(chamber -> {
+            System.out.println(chamber.getNumerochamber());
+            reservations.addAll(chamber.getRes());
+        });
+        return reservations ;
+    }
     @GetMapping("findAllReservation")
     List<Reservation> findAll(){
         return iReservationService.findAllReservations();
@@ -29,16 +40,22 @@ public class ReservationRestController {
         return iReservationService.findByIdReservation(id);
     }
 
-    @PostMapping("addReservation")
-    Reservation addReservation(@RequestBody Reservation r){
+    @GetMapping("findReservationByIDEtudiant/{email}")
+    List<Reservation> findReservationByIDEtudiant(@PathVariable("email") String email){
+        return iReservationService.findReservationByEmailEtudiant(email);
+    }
 
-        Set<Etudiant> e = r.getEtudiants() ;
+    @PostMapping ("addReservation/{numerochamber}/{cin}")
+    Reservation addReservation( @PathVariable("numerochamber") long numero ,
+                               @PathVariable("cin") long cin){
+
+        /*Set<User> e = r.getEtudiants() ;
 
         r.setAnneeReservation(new Date());
-        Etudiant[] names = e.toArray(new Etudiant[e.size()]);
-        r.setIdReservation(names[0].getNomEt()+r.getAnneeReservation().getTime());
+        User[] names = e.toArray(new User[e.size()]);
+        r.setIdReservation(names[0].getNomEt()+r.getAnneeReservation().getTime());*/
         //return r;
-        return iReservationService.addReservation(r);
+        return iReservationService.addReservation( numero , cin);
     }
 
     @PostMapping("addAllReservation")
