@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import tn.esprit.brogram.backend.DAO.Entities.User;
+
 
 import java.util.Collection;
 
@@ -13,9 +15,11 @@ import java.util.Collection;
 public class UserPrincipal implements UserDetails {
     private final Long userId;
     private final String email;
+    private final boolean enabled;
     @JsonIgnore
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -49,6 +53,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        System.out.println("RRRRRRRRRRRRRRRRRRRRR____________________________________________________");
+        return enabled;
     }
 }

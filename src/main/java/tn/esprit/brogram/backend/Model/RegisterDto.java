@@ -1,9 +1,12 @@
 package tn.esprit.brogram.backend.Model;
 
+import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.Random;
+import java.util.random.RandomGenerator;
 
 @ToString
 @Data

@@ -1,10 +1,12 @@
 package tn.esprit.brogram.backend.DAO.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="User")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,4 +44,21 @@ public class User {
     @JsonIgnore
     @ManyToMany(mappedBy = "etudiants" , cascade =  CascadeType.ALL)
     private Set<Reservation> reservations = new HashSet<>();
+
+    @Column(name="updatedAt")
+    private Date updatedAt;
+
+
+    @Column(name="createdAt")
+    private Date createdAt;
+
+    @Column(name="enabled")
+    private boolean enabled = false ;
+
+    @Column(name="verificationToken")
+    private String verificationToken;
+
+    public boolean getEnabled(){
+        return this.enabled;
+    }
 }
