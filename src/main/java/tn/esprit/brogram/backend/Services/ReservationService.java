@@ -7,9 +7,7 @@ import tn.esprit.brogram.backend.DAO.Repositories.ReservationRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UserRepository;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -17,9 +15,10 @@ public class ReservationService implements IReservationService {
     ReservationRepository reservationRepository ;
     ChamberRepository chamberRepository ;
     UserRepository userRepository ;
-
+    EmailService emailService ;
     @Override
-    public Reservation addReservation(long numero , long cin) {
+    public Set<Reservation> addReservation(long numero , List<Long> cin) {
+        Set<Reservation> returnedReservation = new HashSet<>( );
         /*********** GENERATE id ***********/
         LocalDate dateDebutAU;
         LocalDate dateFinAU;
@@ -33,20 +32,31 @@ public class ReservationService implements IReservationService {
         }
         /**************************************************/
         Chamber c = chamberRepository.findChamberByNumerochamber(numero);
-        User u = userRepository.findEtudiantsByCin(cin);
-        Reservation r = new Reservation();
-        r.setIdReservation(dateDebutAU.getYear()+"-"+dateFinAU.getYear()+"-"+c.getBloc().getNomBloc()
-                +"-"+c.getNumerochamber()+"-"+cin);
+        for(long cinEtudiant:cin){
 
-        r.setAnneeReservation(new Date());
-        r.setDateDebut(dateDebutAU);
-        r.setDateFin(dateFinAU);
-        r.setEstValide(true);
-        c.getRes().add(r);
-        chamberRepository.save(c);
-        r.getEtudiants().add(u);
+            System.out.println(cinEtudiant);
+            User u = userRepository.findEtudiantsByCin(cinEtudiant);
+            System.out.println("USER");
+            Reservation r = new Reservation();
+            r.setIdReservation(dateDebutAU.getYear()+"-"+dateFinAU.getYear()+"-"+c.getBloc().getNomBloc()
+                    +"-"+c.getNumerochamber()+"-"+cinEtudiant);
 
-        return reservationRepository.save(r);
+            r.setAnneeReservation(new Date());
+            r.setDateDebut(dateDebutAU);
+            r.setDateFin(dateFinAU);
+            r.setEstValide(true);
+            c.getRes().add(r);
+            chamberRepository.save(c);
+            r.getEtudiants().add(u);
+            reservationRepository.save(r);
+            returnedReservation.add(r);
+
+
+           // emailService.sendMailReservationInformation(r,u);
+        }
+
+
+        return returnedReservation;
     }
 
     @Override

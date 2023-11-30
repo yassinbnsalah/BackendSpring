@@ -36,8 +36,6 @@ public class User {
     private String ecole;
     @Column(name="dateNaissance")
     private LocalDate dateNaissance ;
-
-
     @JsonIgnore
     @ManyToMany(mappedBy = "etudiants" , cascade =  CascadeType.ALL)
     private Set<Reservation> reservations = new HashSet<>();

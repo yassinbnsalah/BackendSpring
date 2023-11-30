@@ -32,6 +32,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/").permitAll()
 
                         .requestMatchers("/FoyerRestController/**").permitAll()
+                        .requestMatchers("/sendMail/**").permitAll()
+                        .requestMatchers("/DemandeRestController/**").permitAll()
                         .requestMatchers("/ChamberRestController/**").permitAll()
                         .requestMatchers("/ReservationRestController/**").permitAll()
                         .requestMatchers("/BlocRestController/**").permitAll()

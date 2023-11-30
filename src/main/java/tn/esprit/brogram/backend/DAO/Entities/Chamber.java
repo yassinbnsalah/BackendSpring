@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+
 import java.util.HashSet;
+
 import java.util.Set;
 
 @Entity
@@ -36,11 +38,16 @@ public class Chamber {
 
     @Column(name="UpdatedAt")
     private Date UpdatedAt;
+    @Lob
+    @Column(name = "imagebyte", length = 100000)  // Adjust the length as needed
+    private byte[] imagebyte;
 
     @JsonIgnore
     @ManyToOne
     Bloc bloc ;
 
     @OneToMany(cascade =  CascadeType.ALL)
+
     private  Set<Reservation> res  = new HashSet<>();
+
 }

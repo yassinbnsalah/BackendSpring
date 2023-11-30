@@ -51,6 +51,10 @@ public class Universite {
     @OneToOne(cascade = CascadeType.ALL)
     private Image image;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c8f40a249fae24f670ca753ff3fb7d61b860a908
 
    @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
    private Set<Documents> documents;

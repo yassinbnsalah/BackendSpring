@@ -35,10 +35,10 @@ public class UniversiteRestController {
     ImageRepositroy imageRepositroy ;
     DocumentRepository documentRepository;
     @PostMapping("/uploadImg/{idUniversite}")
-    public Universite addImg(
-            @RequestParam("file")  MultipartFile file ,
-            @PathVariable("idUniversite")
-            long idUniversite) {
+
+    public Universite addImg(@RequestParam("file") MultipartFile file ,
+                             @PathVariable("idUniversite") long idUniversite) {
+
 
         Universite universite = universiteRepository.findById(idUniversite).get();
         System.out.println("OK");

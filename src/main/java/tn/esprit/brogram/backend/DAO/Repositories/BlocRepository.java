@@ -7,5 +7,14 @@ import java.util.List;
 
 public interface BlocRepository extends JpaRepository<Bloc,Long> {
 
+    //ByWiWi
+    Bloc getBlocByNomBloc(String nomBlog);
+    //ByWiWi
+    Bloc findBlocByChambers_IdChamber(long idChamber);
+    //by wiwi
+    boolean existsByNomBloc(String nomBloc);
+
     List<Bloc> findBlocByFoyer_IdFoyer(long idFoyer);
+
+
 }
