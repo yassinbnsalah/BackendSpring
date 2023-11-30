@@ -64,7 +64,7 @@ public class FoyerService implements IFoyerService {
     @Override
     public void updateEtatById(long idFoyer, boolean newEtat) {
 
-        foyerRepository.updateEtatById(idFoyer, newEtat);
+       // foyerRepository.updateEtatById(idFoyer, newEtat);
 
     }
 }

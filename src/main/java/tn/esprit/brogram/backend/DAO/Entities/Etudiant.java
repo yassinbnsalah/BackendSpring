@@ -30,9 +30,4 @@ public class Etudiant {
     @Column(name="dateNaissance")
     private LocalDate dateNaissance ;
 
-
-
-  /* @ManyToOne
-   @JoinColumn(name = "universite_id")
-    private Universite universite;*/
 }

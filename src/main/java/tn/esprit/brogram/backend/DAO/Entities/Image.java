@@ -34,11 +34,11 @@ public class Image {
     @Column(name = "picbyte", length = 100000)  // Adjust the length as needed
     private byte[] picbyte;
 
-    public Image(String name, String type, byte[] picbyte) {
+  /*  public Image(String name, String type, byte[] picbyte) {
         this.name = name;
         this.type = type;
         this.picbyte = picbyte;
-    }
+    }*/
 /*
     @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
     private Universite universite;
