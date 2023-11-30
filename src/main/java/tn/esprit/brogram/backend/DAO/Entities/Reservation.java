@@ -37,6 +37,8 @@ public class Reservation {
     @Column(name="status")
     private StateReservation status ;
 
+    @Column(name="anneeUniversitaire")
+    private String anneeUniversitaire ;
     @ManyToMany(cascade = CascadeType.ALL)
     public Set<User> etudiants = new HashSet<>();
 

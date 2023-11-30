@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.brogram.backend.DAO.Entities.*;
 import tn.esprit.brogram.backend.DAO.Repositories.ChamberRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.DemandeRepository;
+import tn.esprit.brogram.backend.DAO.Repositories.ReservationRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UserRepository;
 
 import java.time.LocalDate;
@@ -29,20 +30,35 @@ public class DemandeService implements IDemandeService{
         return demandeRepository.save(demande);
     }
 
-
+    ReservationRepository reservationRepository ;
     @Override
     public Demande UpdateDemande(StateDemande state , int id ) {
 
 
         Demande demande = demandeRepository.findById(id).get() ;
-        demande.setUpdatedAt(new Date());
-        demande.setState(state);
-        if(state == StateDemande.Confirmer){
-            System.out.println("Searching Chamber ");
 
-            List<Chamber> chambers = chamberRepository.findChamberByTypeCAndAndBlocFoyerUniversiteNomUniversite(demande.getTypeChamber() , demande.getEcole()) ;
-            System.out.println("Looping Chamber");
-            boolean test = false ;
+        demande.setUpdatedAt(new Date());
+        User user = userService.findByEmail(demande.getEmail());
+        List<Reservation> reservationsValidated = reservationRepository.findReservationByEtudiants_email(user.getEmail());
+        boolean hadReservation = false;
+        if(!reservationsValidated.isEmpty()){
+            for (Reservation reservation : reservationsValidated) {
+                if((reservation.getAnneeUniversitaire().equals(demande.getAnneeUniversitaire()))&&
+                        (reservation.getEstValide())){
+                    hadReservation = true ;
+                    System.out.println("this user 3ando Reservation BRO LEAVE US ");
+                    break;
+                }
+            }
+        }
+        if(hadReservation){
+            demande.setState(state);
+            if(state == StateDemande.Confirmer){
+                System.out.println("Searching Chamber ");
+
+                List<Chamber> chambers = chamberRepository.findChamberByTypeCAndAndBlocFoyerUniversiteNomUniversite(demande.getTypeChamber() , demande.getEcole()) ;
+                System.out.println("Looping Chamber");
+                boolean test = false ;
 
                 for (Chamber chamber : chambers) {
                     Set<Reservation> reservations = chamber.getRes() ;
@@ -56,7 +72,7 @@ public class DemandeService implements IDemandeService{
                     }
                     System.out.println("Chamber num"+chamber);
                     if(test){
-                        User user = userService.findByEmail(demande.getEmail());
+                        //User user = userService.findByEmail(demande.getEmail());
                         if(user.getId()==0L){
                             User newuser = new User();
                             newuser.setNomEt(demande.getName());
@@ -68,6 +84,7 @@ public class DemandeService implements IDemandeService{
                             newuser.setRole(Roles.ETUDIANT);
                             userRepository.save(newuser);
                         }
+
                         List<Long> CIN = new ArrayList<>();
                         CIN.add(demande.getCin());
                         reservationService.addReservation(chamber.getNumerochamber(),CIN);
@@ -77,6 +94,9 @@ public class DemandeService implements IDemandeService{
                 if(!test){
                     demande.setState(StateDemande.Refuser);
                 }
+            }
+        }else{
+            demande.setState(StateDemande.Refuser);
         }
         return demandeRepository.save(demande);
     }

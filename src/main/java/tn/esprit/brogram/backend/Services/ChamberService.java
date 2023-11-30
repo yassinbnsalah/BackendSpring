@@ -1,9 +1,13 @@
 package tn.esprit.brogram.backend.Services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import tn.esprit.brogram.backend.DAO.Entities.Bloc;
 import tn.esprit.brogram.backend.DAO.Entities.Chamber;
 import tn.esprit.brogram.backend.DAO.Entities.Reservation;
 import tn.esprit.brogram.backend.DAO.Entities.TypeChamber;
+
+import tn.esprit.brogram.backend.DAO.Repositories.BlocRepository;
+
 import tn.esprit.brogram.backend.DAO.Repositories.ChamberRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.ReservationRepository;
 
@@ -16,6 +20,7 @@ import java.util.List;
 public class ChamberService implements IChamberService{
     ChamberRepository chamberRepository;
     ReservationRepository reservationRepository ;
+    BlocRepository blocRepository;
     @Override
     public Chamber addChamber(Chamber c) {
         return chamberRepository.save(c) ;
@@ -73,6 +78,34 @@ public class ChamberService implements IChamberService{
     }
 
     @Override
+    public List<Chamber> getChambresParNomBloc(String nomBloc) {
+        Bloc b = blocRepository.getBlocByNomBloc(nomBloc);
+        return chamberRepository.findByBloc(b) ;
+    }
+    @Override
+    public long nbChambreParTypeEtBloc(TypeChamber type, long idBloc) {
+        Bloc b = blocRepository.findById(idBloc).get();
+        int c = chamberRepository.countChamberByTypeCAndBloc_IdBloc(type , idBloc);
+        return c;
+    }
+    @Override
+    public List<Chamber> getChambresNonReserveParNomFoyerEtTypeChambre(String nomFoyer, TypeChamber type) {
+        return chamberRepository.findChamberByBlocFoyerNomFoyerAndTypeCAndRes_Empty(nomFoyer,type);
+    }
+
+    @Override
+    public List<Chamber> getChambersByType(TypeChamber type) {
+        return chamberRepository.findByTypeC(type);
+    }
+
+    @Override
+    public List<Chamber> getChambersByTypeAndBlocName(TypeChamber type, String blocName) {
+        return chamberRepository.findByTypeCAndBlocNomBloc(type, blocName);
+    }
+
+
+
+    @Override
     public List<Chamber> findChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite) {
 
         return chamberRepository.findChamberByBlocFoyerUniversiteNomUniversite(nomUniversite);
@@ -99,4 +132,5 @@ public class ChamberService implements IChamberService{
         }
         return finalChambers;
     }
+
 }
