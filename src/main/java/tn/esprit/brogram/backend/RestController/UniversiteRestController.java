@@ -11,10 +11,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.brogram.backend.DAO.Entities.*;
-import tn.esprit.brogram.backend.DAO.Repositories.ImageRepositroy;
-import tn.esprit.brogram.backend.DAO.Repositories.RatingRepository;
-import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
-import tn.esprit.brogram.backend.DAO.Repositories.UserRepository;
+import tn.esprit.brogram.backend.DAO.Repositories.*;
 import tn.esprit.brogram.backend.Services.IUniversiteService;
 
 import java.io.IOException;
@@ -36,8 +33,12 @@ public class UniversiteRestController {
     }
     UniversiteRepository universiteRepository ;
     ImageRepositroy imageRepositroy ;
+    DocumentRepository documentRepository;
     @PostMapping("/uploadImg/{idUniversite}")
-    public Universite addImg(@RequestParam("file") MultipartFile file , @PathVariable("idUniversite") long idUniversite) {
+    public Universite addImg(
+            @RequestParam("file")  MultipartFile file ,
+            @PathVariable("idUniversite")
+            long idUniversite) {
 
         Universite universite = universiteRepository.findById(idUniversite).get();
         System.out.println("OK");
@@ -50,6 +51,27 @@ public class UniversiteRestController {
             universite.setImage(img);
             universite.setImagebyte(file.getBytes());
             universiteRepository.save(universite);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return universite;
+    }
+
+    @PostMapping("/uploadLogo/{idUniversite}")
+    public Universite addLogo(
+            @RequestParam("logo")  MultipartFile logo ,
+            @PathVariable("idUniversite")
+            long idUniversite) {
+
+        Universite universite = universiteRepository.findById(idUniversite).get();
+        System.out.println("OK");
+
+        try {
+            Documents doc = new Documents();
+            doc.setDocumentContent(logo.getBytes());
+            doc.setDocumentType(DocumentType.LOGO);
+            doc.setUniversite(universite);
+            documentRepository.save(doc);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

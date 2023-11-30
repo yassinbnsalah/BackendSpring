@@ -51,14 +51,7 @@ public class Universite {
     @OneToOne(cascade = CascadeType.ALL)
     private Image image;
 
-   // @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
-    // private List<Rating> ratings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
-    private Set<Etudiant> etudiants;
-   // @Transient
-   // public long getEnrolledStudentCount() {
-     //   return etudiants.size();
-   // }
-
+   @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
+   private Set<Documents> documents;
 }

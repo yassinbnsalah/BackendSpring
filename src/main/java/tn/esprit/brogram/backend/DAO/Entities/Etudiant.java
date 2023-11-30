@@ -32,7 +32,5 @@ public class Etudiant {
 
 
 
-   @ManyToOne
-   @JoinColumn(name = "universite_id")
-    private Universite universite;
+
 }
