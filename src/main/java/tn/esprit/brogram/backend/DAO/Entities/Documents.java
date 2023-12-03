@@ -1,5 +1,6 @@
 package tn.esprit.brogram.backend.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +23,7 @@ public class Documents {
     @Column(name = "documentContent", length = 1000000)
     private byte[] documentContent;
 
-
+    @JsonIgnore
     @ManyToOne
     private Universite universite;
 }

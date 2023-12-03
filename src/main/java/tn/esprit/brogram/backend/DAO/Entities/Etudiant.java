@@ -31,12 +31,4 @@ public class Etudiant {
     private LocalDate dateNaissance ;
 
 
-
-<<<<<<< HEAD
-
-=======
-  /* @ManyToOne
-   @JoinColumn(name = "universite_id")
-    private Universite universite;*/
->>>>>>> c8f40a249fae24f670ca753ff3fb7d61b860a908
 }

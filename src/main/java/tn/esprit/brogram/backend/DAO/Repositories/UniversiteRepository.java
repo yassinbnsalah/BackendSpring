@@ -15,9 +15,9 @@ public interface UniversiteRepository extends JpaRepository<Universite,Long> {
 
     List<Universite> findByStatuts(String statuts);
 
-    List<Universite> findUniversiteByAdresse(String adresse);
+   // List<Universite> findUniversiteByAdresse(String adresse);
 
-    Universite findUniversiteByFoyerIdFoyer(long idFoyer);
+  //  Universite findUniversiteByFoyerIdFoyer(long idFoyer);
 
     Universite findUniversiteByNomUniversiteAndEmail(String name, String email);
 

@@ -3,6 +3,7 @@ package tn.esprit.brogram.backend.RestController;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,7 @@ import tn.esprit.brogram.backend.DAO.Repositories.*;
 import tn.esprit.brogram.backend.Services.IUniversiteService;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -25,30 +25,59 @@ import java.util.Optional;
 
 public class UniversiteRestController {
     @Autowired
+    UniversiteRepository universiteRepository ;
     IUniversiteService iUniversiteServices  ;
+
+    ImageRepositroy imageRepositroy ;
+    DocumentRepository documentRepository;
     @PostMapping(value = "addUniversite", consumes = MediaType.APPLICATION_JSON_VALUE)
     Universite addUniversite(@RequestBody Universite u){
         u.setStatuts("En_attente");
         return iUniversiteServices.addUniversite(u);
     }
-    UniversiteRepository universiteRepository ;
-    ImageRepositroy imageRepositroy ;
-    DocumentRepository documentRepository;
+
     @PostMapping("/uploadImg/{idUniversite}")
 
-    public Universite addImg(@RequestParam("file") MultipartFile file ,
-                             @PathVariable("idUniversite") long idUniversite) {
+
+    public Universite addImg(
+            @RequestParam("file")  MultipartFile file ,
+            @RequestParam("logo")  MultipartFile logo ,
+            @RequestParam("justification")  MultipartFile justificaiton ,
+            @RequestParam("attestation")  MultipartFile attestation ,
+            @PathVariable("idUniversite")
+            long idUniversite) {
 
 
         Universite universite = universiteRepository.findById(idUniversite).get();
-        System.out.println("OK");
+        System.out.println("image uploaded ");
 
         try {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            Image FileDB = new Image(fileName, file.getContentType(), file.getBytes());
-            //FileDB.setUniversite(universite);
-            Image img = imageRepositroy.save(FileDB);
-            universite.setImage(img);
+            Set<Documents> docs = new HashSet<>();
+
+            Documents docLogo = new Documents();
+            docLogo.setDocumentContent(logo.getBytes());
+            docLogo.setDocumentType(DocumentType.LOGO);
+            docLogo.setUniversite(universite);
+            documentRepository.save(docLogo);
+            universite.getDocuments().add(docLogo);
+
+            Documents docAttestation = new Documents();
+            docAttestation.setDocumentContent(justificaiton.getBytes());
+            docAttestation.setDocumentType(DocumentType.JUSTIFICATION);
+            docAttestation.setUniversite(universite);
+            documentRepository.save(docAttestation);
+            universite.getDocuments().add(docAttestation);
+
+            Documents docFichier = new Documents();
+            docFichier.setDocumentContent(attestation.getBytes());
+            docFichier.setDocumentType(DocumentType.FICHIER);
+            docFichier.setUniversite(universite);
+            documentRepository.save(docFichier);
+            universite.getDocuments().add(docFichier);
+
+            System.out.println("document created Successfully ");
+            universiteRepository.save(universite);
+
             universite.setImagebyte(file.getBytes());
             universiteRepository.save(universite);
         } catch (IOException e) {
@@ -56,27 +85,16 @@ public class UniversiteRestController {
         }
         return universite;
     }
-
-    @PostMapping("/uploadLogo/{idUniversite}")
-    public Universite addLogo(
-            @RequestParam("logo")  MultipartFile logo ,
-            @PathVariable("idUniversite")
-            long idUniversite) {
-
-        Universite universite = universiteRepository.findById(idUniversite).get();
-        System.out.println("OK");
-
-        try {
-            Documents doc = new Documents();
-            doc.setDocumentContent(logo.getBytes());
-            doc.setDocumentType(DocumentType.LOGO);
-            doc.setUniversite(universite);
-            documentRepository.save(doc);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    @GetMapping("/download/{idUniversite}")
+    public List<Documents> downloadDocuments(@PathVariable long idUniversite) {
+        Universite universite = iUniversiteServices.UnifindById(idUniversite);
+        if (universite != null) {
+            return documentRepository.findByUniversiteIdUniversite(idUniversite);
+        } else {
+            return Collections.emptyList();
         }
-        return universite;
     }
+
 
     @GetMapping("findUniversiteByEmailAgent/{email}")
     Universite findUniversiteByEmailAgent(@PathVariable("email") String email){
@@ -203,5 +221,12 @@ public class UniversiteRestController {
     Universite UnifindByUniversiteNom(@PathVariable("name") String nomUniversite){
         return iUniversiteServices.UnifindByNomUniv(nomUniversite);
     }
+
+    @GetMapping("checkUniversityNameUnique/{name}")
+    public boolean checkUniversityNameUnique(@PathVariable String name) {
+        Universite existingUniversite = iUniversiteServices.UnifindByNomUniv(name);
+        return existingUniversite == null;
+    }
+
 
 }
