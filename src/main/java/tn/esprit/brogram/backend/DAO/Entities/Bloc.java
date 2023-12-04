@@ -8,6 +8,7 @@ import lombok.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -36,12 +37,11 @@ public class Bloc {
     Foyer foyer ;
 
     @OneToMany(mappedBy = "bloc" , cascade = CascadeType.ALL)
-    private Set<Chamber> chambers;
 
-    @Column(name = "created_at",nullable = true,updatable = false)
+    private Set<Chamber> chambers=new HashSet<>();
+    @Column(name = "created_at",nullable = false,updatable = false)
     private Date createdAt;
-
-    @Column(name = "updated_at", nullable = true)
+    @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
     private String description;
