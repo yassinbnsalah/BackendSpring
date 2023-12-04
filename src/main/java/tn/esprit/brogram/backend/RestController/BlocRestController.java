@@ -31,6 +31,8 @@ public class BlocRestController {
     }
 
 
+
+
     @GetMapping("findBLocByFoyer/{id}")
     List<Bloc> findBlocByFoyer(@PathVariable("id") long id){
         return iBlocService.findBlocByFoyer_IdFoyer(id);

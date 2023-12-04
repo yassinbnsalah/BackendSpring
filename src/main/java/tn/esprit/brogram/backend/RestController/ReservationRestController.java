@@ -20,7 +20,7 @@ public class ReservationRestController {
     IReservationService iReservationService;
     IChamberService iChamberService;
         @GetMapping("findReservationByUniversiteName/{name}")
-    List<Reservation> findReservationByUniversiteName(@PathVariable("name") String name){
+        List<Reservation> findReservationByUniversiteName(@PathVariable("name") String name){
         List<Chamber> chambers = iChamberService.findChamberByBlocFoyerUniversiteNomUniversite(name);
             System.out.println(chambers);
         List<Reservation> reservations = new ArrayList<>();

@@ -45,17 +45,14 @@ public class ReservationService implements IReservationService {
             r.setDateDebut(dateDebutAU);
             r.setDateFin(dateFinAU);
             r.setEstValide(true);
+            r.setStatus(StateReservation.confirmed);
             c.getRes().add(r);
             chamberRepository.save(c);
             r.getEtudiants().add(u);
             reservationRepository.save(r);
             returnedReservation.add(r);
-
-
            // emailService.sendMailReservationInformation(r,u);
         }
-
-
         return returnedReservation;
     }
 

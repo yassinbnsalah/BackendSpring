@@ -49,7 +49,13 @@ public class ChamberService implements IChamberService{
 
     @Override
     public Chamber editChamber(Chamber c) {
+        Chamber chamber = chamberRepository.findById(c.getIdChamber()).get();
+        Bloc b = chamber.getBloc();
+        c.setBloc(b);
+
+
         return chamberRepository.save(c);
+
     }
 
     @Override

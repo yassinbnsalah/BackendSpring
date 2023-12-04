@@ -56,8 +56,9 @@ public class ChamberRestController {
     Chamber putChamberReservation(@PathVariable("id") long idCh , @RequestBody Reservation r){
         return iChamberService.addChamberReservation(idCh , r);
     }
-    @GetMapping("getChambersByReservation/{id}")
+    @GetMapping("findChamberByReservationID/{id}")
     Chamber getChamberByReservation(@PathVariable("id") String idReservation){
+        System.out.println("hey");
         return iChamberService.findChamberByResIdReservation(idReservation) ;
     }
 
@@ -67,7 +68,6 @@ public class ChamberRestController {
     }
     @PutMapping("updateChamber")
     Chamber editChamber(@RequestBody Chamber c){
-
         c.setUpdatedAt(new Date());
         return iChamberService.editChamber(c);
     }

@@ -27,6 +27,20 @@ public class DemandeService implements IDemandeService{
         demande.setState(StateDemande.EnCour);
         demande.setCreatedAt(new Date());
         demande.setDateDemande(LocalDate.now());
+        User userE = userService.findByEmail(demande.getEmail());
+        if(userE.getId()==0L) {
+            User user = new User();
+            user.setNomEt(demande.getName());
+            user.setPrenomEt(demande.getPrename());
+            user.setCin(demande.getCin());
+            user.setEcole(demande.getEcole());
+
+            String passwd = Long.toString(demande.getCin());
+            user.setEmail(demande.getEmail());
+            user.setPassword(passwordEncoder.encode(passwd));
+            user.setRole(Roles.ETUDIANT);
+            userRepository.save(user);
+        }
         return demandeRepository.save(demande);
     }
 
