@@ -1,4 +1,5 @@
 package tn.esprit.brogram.backend.Services;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.brogram.backend.DAO.Entities.Bloc;
@@ -133,4 +134,12 @@ public class ChamberService implements IChamberService{
         return finalChambers;
     }
 
+    @Override
+    public void affecterBlocAChambre(long idChamber, long idBloc) {
+        Chamber chambre = chamberRepository.findById(idChamber).orElseThrow(() -> new EntityNotFoundException("Chambre not found"));
+        Bloc bloc = blocRepository.findById(idBloc).orElseThrow(() -> new EntityNotFoundException("Bloc not found"));
+
+        chambre.setBloc(bloc);
+        chamberRepository.save(chambre);
+    }
 }
