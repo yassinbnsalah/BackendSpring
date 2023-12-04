@@ -1,5 +1,6 @@
 package tn.esprit.brogram.backend.Services;
 
+import tn.esprit.brogram.backend.DAO.Entities.Documents;
 import tn.esprit.brogram.backend.DAO.Entities.Rating;
 import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
@@ -30,4 +31,6 @@ public interface IUniversiteService {
     Universite findUniversiteByNomUniversiteAndEmail(String name, String email);
 
     Universite UnifindByNomUniv(String nomUniversite);
+
+    List<Documents> downloadDocs(long idUniversite);
 }

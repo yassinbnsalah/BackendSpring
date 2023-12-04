@@ -2,10 +2,8 @@ package tn.esprit.brogram.backend.Services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.brogram.backend.DAO.Entities.Foyer;
-import tn.esprit.brogram.backend.DAO.Entities.Rating;
-import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
-import tn.esprit.brogram.backend.DAO.Entities.Universite;
+import tn.esprit.brogram.backend.DAO.Entities.*;
+import tn.esprit.brogram.backend.DAO.Repositories.DocumentRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.FoyerRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.RatingRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
@@ -105,39 +103,16 @@ public class UniversiteService implements IUniversiteService{
         return universiteRepository.findUniversiteByNomUniversiteAndEmail(name,email);
     }
 
+    DocumentRepository documentRepository;
     @Override
     public Universite UnifindByNomUniv(String nomUniversite) {
         Universite universite = universiteRepository.findUnBynomUniversite(nomUniversite);
         return universite != null ? universite : Universite.builder().build();    }
 
-
-  /*  RatingRepository ratingRepository;
     @Override
-    public Universite addRatingToUniversite(long universiteId, Rating rating) {
-        Universite universite = universiteRepository.findById(universiteId)
-                .orElseThrow(() -> new RuntimeException("Universite not found"));
+    public List<Documents> downloadDocs(long idUniversite) {
+        return documentRepository.findByUniversiteIdUniversite(idUniversite);
 
-        rating.setUniversite(universite);
-        Rating savedRating = ratingRepository.save(rating);
-
-        universite.getRatings().add(savedRating);
-        universiteRepository.save(universite);
-
-        return universite;    }
-
-    @Override
-    public Double calculateAverageRating(long universiteId) {
-        Universite universite = universiteRepository.findById(universiteId)
-                .orElseThrow(() -> new RuntimeException("Universite not found"));
-
-        List<Rating> ratings = universite.getRatings();
-
-        if (ratings.isEmpty()) {
-            return 0.0;
-        }
-
-        double sum = ratings.stream().mapToDouble(Rating::getStars).sum();
-        return sum / ratings.size();    }*/
-
+    }
 
 }

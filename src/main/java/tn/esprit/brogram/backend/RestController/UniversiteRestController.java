@@ -3,6 +3,7 @@ package tn.esprit.brogram.backend.RestController;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,7 @@ import tn.esprit.brogram.backend.DAO.Repositories.*;
 import tn.esprit.brogram.backend.Services.IUniversiteService;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -40,13 +38,15 @@ public class UniversiteRestController {
 
     @PostMapping("/uploadImg/{idUniversite}")
 
+
     public Universite addImg(
             @RequestParam("file")  MultipartFile file ,
             @RequestParam("logo")  MultipartFile logo ,
-            @RequestParam("justificaiton")  MultipartFile justificaiton ,
+            @RequestParam("justification")  MultipartFile justificaiton ,
             @RequestParam("attestation")  MultipartFile attestation ,
             @PathVariable("idUniversite")
             long idUniversite) {
+
 
         Universite universite = universiteRepository.findById(idUniversite).get();
         System.out.println("image uploaded ");
@@ -85,56 +85,17 @@ public class UniversiteRestController {
         }
         return universite;
     }
-
-    /*@PutMapping("/uploadLogo/{idUniversite}")
-    Universite addLogo(
-           // @RequestParam("logo")  MultipartFile logo ,
-            @PathVariable("idUniversite")
-            long idUniversite) {
-
-        Universite universite = universiteRepository.findById(idUniversite).get();
-        System.out.println("OK");
-
-      /*  try {
-            Documents doc = new Documents();
-            doc.setDocumentContent(logo.getBytes());
-            doc.setDocumentType(DocumentType.LOGO);
-            doc.setUniversite(universite);
-          //  documentRepository.save(doc);
-            System.out.println("document created Successfully ");
-          /*  universite.getDocuments().add(doc);
-            universiteRepository.save(universite);*/
-       /* } catch (Exception e) {
-           // System.out.println(e.getMessage());
-        }*/
-       /* System.out.println("DONE HERE ");
-        return universite;
-    }*/
-
-
- /*   @PutMapping("/uploadLogo/{id}")
-    Universite addLogo(
-            @RequestParam("logo")  MultipartFile logo ,
-            @PathVariable("id") long id) {
-        System.out.println(id);
-        Universite universite = universiteRepository.findById(id).get();
-        System.out.println(universite.getIdUniversite());
-
-      try {
-            Documents doc = new Documents();
-            doc.setDocumentContent(logo.getBytes());
-            doc.setDocumentType(DocumentType.LOGO);
-            doc.setUniversite(universite);
-            documentRepository.save(doc);
-            System.out.println("document created Successfully ");
-           universite.getDocuments().add(doc);
-            universiteRepository.save(universite);
-        } catch (Exception e) {
-          System.out.println(e.getMessage());
+    @GetMapping("/download/{idUniversite}")
+    public List<Documents> downloadDocuments(@PathVariable long idUniversite) {
+        Universite universite = iUniversiteServices.UnifindById(idUniversite);
+        if (universite != null) {
+            return documentRepository.findByUniversiteIdUniversite(idUniversite);
+        } else {
+            return Collections.emptyList();
         }
-        System.out.println("DONE HERE ");
-        return universite;
-    }*/
+    }
+
+
     @GetMapping("findUniversiteByEmailAgent/{email}")
     Universite findUniversiteByEmailAgent(@PathVariable("email") String email){
         return iUniversiteServices.findUniversiteByEmail(email);
@@ -260,5 +221,12 @@ public class UniversiteRestController {
     Universite UnifindByUniversiteNom(@PathVariable("name") String nomUniversite){
         return iUniversiteServices.UnifindByNomUniv(nomUniversite);
     }
+
+    @GetMapping("checkUniversityNameUnique/{name}")
+    public boolean checkUniversityNameUnique(@PathVariable String name) {
+        Universite existingUniversite = iUniversiteServices.UnifindByNomUniv(name);
+        return existingUniversite == null;
+    }
+
 
 }
