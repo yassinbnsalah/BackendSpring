@@ -2,10 +2,15 @@ package tn.esprit.brogram.backend.Services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.brogram.backend.DAO.Entities.Bloc;
+import tn.esprit.brogram.backend.DAO.Entities.Chamber;
+import tn.esprit.brogram.backend.DAO.Entities.TypeChamber;
 import tn.esprit.brogram.backend.DAO.Repositories.BlocRepository;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @AllArgsConstructor
 @Service
 public class BlocService implements IBlocService{
@@ -50,5 +55,34 @@ public class BlocService implements IBlocService{
     @Override
     public List<Bloc> findBlocByFoyer_IdFoyer(long idFoyer) {
         return blocRepository.findBlocByFoyer_IdFoyer(idFoyer);
+    }
+
+    @Override
+    public double calculateAverageCapacity(long blocId) {
+       Bloc bloc=findById(blocId);
+       if(bloc !=null && bloc.getChambers()!=null){
+           int totalCapacity=bloc.getChambers().stream().mapToInt(this::getChamberCapacity).sum();
+           return (double) totalCapacity/bloc.getChambers().size();
+       }
+        return 0;
+    }
+
+    @Override
+    public List<Object[]> countChambersByType(long blocId) {
+        return blocRepository.countChambersByType(blocId);
+    }
+
+
+    private int getChamberCapacity(Chamber chamber){
+        switch (chamber.getTypeC()){
+            case Simple:
+                return 1;
+            case Double:
+                return 2;
+            case Triple:
+                return 3;
+            default:
+                return 0;
+        }
     }
 }

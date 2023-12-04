@@ -4,16 +4,15 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.brogram.backend.DAO.Entities.Bloc;
-import tn.esprit.brogram.backend.DAO.Entities.Chamber;
-import tn.esprit.brogram.backend.DAO.Entities.Foyer;
-import tn.esprit.brogram.backend.DAO.Entities.Universite;
+import tn.esprit.brogram.backend.DAO.Entities.*;
+import tn.esprit.brogram.backend.DAO.Repositories.BlocRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 import tn.esprit.brogram.backend.Services.IBlocService;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -24,9 +23,17 @@ public class BlocRestController {
     @Autowired
     IBlocService iBlocService ;
     UniversiteRepository universiteRepository ;
+    BlocRepository blocRepository;
     @GetMapping("findAll")
     List<Bloc> findAll(){
         return iBlocService.findAll();
+    }
+
+    @GetMapping("findAllByuniversite/{name}")
+    List<Bloc> findAllByuniversite(@PathVariable("name") String name){
+        Universite u = universiteRepository.findUnBynomUniversite(name) ;
+      Foyer f=u.getFoyer();
+      return f.getBlocs();
     }
 
     @PostMapping("addBloc/{name}")
@@ -38,6 +45,7 @@ public class BlocRestController {
             for (Chamber chamber : b.getChambers()) {
                 chamber.setCreatedAt(new Date());
                 chamber.setUpdatedAt(new Date());
+                chamber.setBloc(b);
             }
         }
         b.setFoyer(f);
@@ -69,5 +77,17 @@ public class BlocRestController {
     @DeleteMapping("delete")
     void delete(@RequestBody Bloc b){
         iBlocService.delete(b);
+    }
+    @GetMapping("calculateAverageCapacity")
+    Map<Long,Double> calculateAverageCapacity(){
+        List<Bloc> allbloc=iBlocService.findAll();
+        return allbloc.stream().collect(Collectors.toMap(
+                Bloc::getIdBloc,
+                bloc -> iBlocService.calculateAverageCapacity(bloc.getIdBloc())
+        ));
+    }
+    @GetMapping("countChambersByType/{blocId}")
+    List<Object[]> countChambersByType(@PathVariable("blocId") long blocId) {
+        return iBlocService.countChambersByType(blocId);
     }
 }
