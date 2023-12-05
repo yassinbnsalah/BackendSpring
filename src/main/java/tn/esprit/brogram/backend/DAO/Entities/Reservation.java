@@ -39,6 +39,10 @@ public class Reservation {
 
     @Column(name="anneeUniversitaire")
     private String anneeUniversitaire ;
+
+    @Column(name="AutoRenew")
+    private boolean autoRenew ;
+
     @ManyToMany(cascade = CascadeType.ALL)
     public Set<User> etudiants = new HashSet<>();
 

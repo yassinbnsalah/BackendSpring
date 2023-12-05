@@ -29,6 +29,8 @@ public class BlocService implements IBlocService{
 
     @Override
     public Bloc editBloc(Bloc b) {
+        Bloc bloc = blocRepository.findById(b.getIdBloc()).get();
+        b.setFoyer(bloc.getFoyer());
         return blocRepository.save(b);
     }
 
