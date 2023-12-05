@@ -14,5 +14,16 @@ public interface IBlocService {
     void deleteByID(long id);
     void delete(Bloc b) ;
 
+
+
+    //ByWiWi
+    String getBlocNameById(long idBloc);
+    //ByWiWi
+    Bloc findBlocByChamber_IdChamber(long idChamber);
+
+    //by wiwi
+    boolean doesBlocExist(String nomBloc);
+
     List<Bloc> findBlocByFoyer_IdFoyer(long idFoyer);
+
 }

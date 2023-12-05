@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name="universite")
 @Getter
@@ -44,7 +49,9 @@ public class Universite {
     @Column(name = "imagebyte", length = 100000)  // Adjust the length as needed
     private byte[] imagebyte;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Image image;
 
+
+
+   @OneToMany(mappedBy = "universite", cascade = CascadeType.ALL)
+   private Set<Documents> documents = new HashSet<>();
 }

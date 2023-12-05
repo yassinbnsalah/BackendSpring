@@ -53,7 +53,6 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        System.out.println("RRRRRRRRRRRRRRRRRRRRR____________________________________________________");
         return enabled;
     }
 }
