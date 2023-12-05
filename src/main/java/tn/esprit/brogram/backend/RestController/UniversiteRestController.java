@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.brogram.backend.DAO.Entities.Bloc;
 import tn.esprit.brogram.backend.DAO.Entities.Image;
 import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
@@ -33,6 +34,11 @@ public class UniversiteRestController {
     }
     UniversiteRepository universiteRepository ;
     ImageRepositroy imageRepositroy ;
+    @GetMapping("findUniversiteByFoyer/{id}")
+    List<Universite> findUniversiteByFoyer(@PathVariable("id") long idFoyer){
+        return universiteRepository.findUniversiteByFoyer_IdFoyer(idFoyer);
+    }
+
     @PostMapping("/uploadImg/{idUniversite}")
     public Universite addImg(@RequestParam("file") MultipartFile file , @PathVariable("idUniversite") long idUniversite) {
 

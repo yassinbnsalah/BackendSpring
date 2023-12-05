@@ -23,6 +23,12 @@ public class Foyer {
     @Column(name="nomFoyer")
     private String nomFoyer ;
 
+    @Column(name="adresse")
+    private String adresse ;
+
+    @Column(name="description")
+    private String description ;
+
     @Column(name="capaciteFoyer")
     private long capaciteFoyer ;
 
@@ -41,4 +47,10 @@ public class Foyer {
 
     @OneToMany(mappedBy = "foyer" , cascade =  CascadeType.ALL)
     List<Bloc> blocs ;
+    @Lob
+    @Column(name = "imagebyte", length = 100000)  // Adjust the length as needed
+    private byte[] imagebyte;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
 }
