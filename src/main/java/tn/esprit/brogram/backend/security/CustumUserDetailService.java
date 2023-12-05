@@ -23,6 +23,7 @@ public class CustumUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var user = userService.findByEmail(username);
         return UserPrincipal.builder()
+                .enabled(user.getEnabled())
                 .userId(user.getId())
                 .email(user.getEmail())
 

@@ -40,6 +40,8 @@ public class WebSecurityConfig {
 
                         .requestMatchers("/UserRestController/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
+                                                .requestMatchers("/verify").permitAll()
+                        .requestMatchers("/reset-password/**").permitAll()
                         .requestMatchers("/auth/register").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

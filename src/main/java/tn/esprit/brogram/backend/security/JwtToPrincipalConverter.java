@@ -3,11 +3,14 @@ package tn.esprit.brogram.backend.security;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import tn.esprit.brogram.backend.Services.UserService;
 
 import java.util.List;
 
 @Component
 public class JwtToPrincipalConverter {
+    private UserService userService;
+
     public UserPrincipal convert(DecodedJWT jwt){
         return UserPrincipal.builder()
                 .userId(Long.valueOf(jwt.getSubject()))

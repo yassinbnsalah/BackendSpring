@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import tn.esprit.brogram.backend.DAO.Entities.Roles;
 import tn.esprit.brogram.backend.DAO.Entities.User;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User,Long> {
@@ -14,4 +15,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     User findByEmail(String email);
 
     boolean existsByEmail(String email);
+
+    User findByVerificationToken(String verificationToken);
+    List<User> findByLastLoginBefore(LocalDate date);
 }
