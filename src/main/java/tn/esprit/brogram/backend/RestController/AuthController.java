@@ -70,7 +70,7 @@ public class AuthController {
     }
 
 
- 
+
     @PostMapping("/auth/register")
     public ResponseEntity<String> registerUser(@RequestBody RegisterDto registerDto) {
         User user = userRepo.findByEmail(registerDto.getEmail());

@@ -6,12 +6,13 @@ import org.springframework.data.repository.query.Param;
 import tn.esprit.brogram.backend.DAO.Entities.Universite;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public interface UniversiteRepository extends JpaRepository<Universite,Long> {
     Universite findUnBynomUniversite(String name);
 
     Universite findUniversiteByEmail(String email);
+
 
     List<Universite> findByStatuts(String statuts);
 
@@ -20,5 +21,9 @@ public interface UniversiteRepository extends JpaRepository<Universite,Long> {
   //  Universite findUniversiteByFoyerIdFoyer(long idFoyer);
 
     Universite findUniversiteByNomUniversiteAndEmail(String name, String email);
+
+
+    List<Universite> findUniversiteByFoyer_IdFoyer(long idFoyer);
+    Universite findUniversiteByFoyerIdFoyer(long idFoyer);
 
 }

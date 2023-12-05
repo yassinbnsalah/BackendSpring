@@ -117,12 +117,12 @@ public class UserService implements IUserService {
     public List<User> getEtudiantUsers() {
         List<User> allUsers = userRepo.findAll();
 
-        List<User> etudiantUsers = allUsers.stream()
+        /*List<User> etudiantUsers = allUsers.stream()
                 .filter(user -> user.getRole() == Roles.ETUDIANT || user.getRole() == Roles.AGENTUNIVERSITE)
                 .sorted(Comparator.comparing(User::getEmail))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
 
-        return etudiantUsers;
+        return allUsers;
     }
 
 

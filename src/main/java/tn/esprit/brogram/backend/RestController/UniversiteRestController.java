@@ -11,8 +11,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import tn.esprit.brogram.backend.DAO.Entities.*;
 import tn.esprit.brogram.backend.DAO.Repositories.*;
+
+import tn.esprit.brogram.backend.DAO.Entities.Bloc;
+import tn.esprit.brogram.backend.DAO.Entities.Image;
+import tn.esprit.brogram.backend.DAO.Entities.StateUniversite;
+import tn.esprit.brogram.backend.DAO.Entities.Universite;
+import tn.esprit.brogram.backend.DAO.Repositories.ImageRepositroy;
+import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
+
 import tn.esprit.brogram.backend.Services.IUniversiteService;
 
 import java.io.IOException;
@@ -35,6 +44,13 @@ public class UniversiteRestController {
         u.setStatuts("En_attente");
         return iUniversiteServices.addUniversite(u);
     }
+
+
+    @GetMapping("findUniversiteByFoyer/{id}")
+    List<Universite> findUniversiteByFoyer(@PathVariable("id") long idFoyer){
+        return universiteRepository.findUniversiteByFoyer_IdFoyer(idFoyer);
+    }
+
 
     @PostMapping("/uploadImg/{idUniversite}")
 

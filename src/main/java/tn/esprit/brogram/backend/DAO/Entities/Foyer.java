@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +24,12 @@ public class Foyer {
     @Column(name="nomFoyer")
     private String nomFoyer ;
 
+    @Column(name="adresse")
+    private String adresse ;
+
+    @Column(name="description")
+    private String description ;
+
     @Column(name="capaciteFoyer")
     private long capaciteFoyer ;
 
@@ -40,5 +47,11 @@ public class Foyer {
     private Universite universite ;
 
     @OneToMany(mappedBy = "foyer" , cascade =  CascadeType.ALL)
-    List<Bloc> blocs ;
+    List<Bloc> blocs = new ArrayList<>();
+    @Lob
+    @Column(name = "imagebyte", length = 100000)  // Adjust the length as needed
+    private byte[] imagebyte;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
 }
