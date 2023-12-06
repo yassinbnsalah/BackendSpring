@@ -17,7 +17,7 @@ public class ReservationService implements IReservationService {
     UserRepository userRepository ;
     EmailService emailService ;
     @Override
-    public Set<Reservation> addReservation(long numero , List<Long> cin) {
+    public Set<Reservation> addReservation(long numero , List<Long> cin, boolean autoRenew) {
         Set<Reservation> returnedReservation = new HashSet<>( );
         /*********** GENERATE id ***********/
         LocalDate dateDebutAU;
@@ -42,8 +42,10 @@ public class ReservationService implements IReservationService {
                     +"-"+c.getNumerochamber()+"-"+cinEtudiant);
 
             r.setAnneeReservation(new Date());
+            r.setAnneeUniversitaire(dateDebutAU.getYear()+"-"+dateFinAU.getYear());
             r.setDateDebut(dateDebutAU);
             r.setDateFin(dateFinAU);
+            r.setAutoRenew(autoRenew);
             r.setEstValide(true);
             r.setStatus(StateReservation.confirmed);
             c.getRes().add(r);
@@ -51,7 +53,7 @@ public class ReservationService implements IReservationService {
             r.getEtudiants().add(u);
             reservationRepository.save(r);
             returnedReservation.add(r);
-           // emailService.sendMailReservationInformation(r,u);
+            emailService.sendMailReservationInformation(r,u);
         }
         return returnedReservation;
     }

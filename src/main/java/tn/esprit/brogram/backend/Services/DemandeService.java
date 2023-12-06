@@ -48,7 +48,7 @@ public class DemandeService implements IDemandeService{
     @Override
     public Demande UpdateDemande(StateDemande state , int id ) {
 
-
+        System.out.println("updating Demande");
         Demande demande = demandeRepository.findById(id).get() ;
 
         demande.setUpdatedAt(new Date());
@@ -65,7 +65,8 @@ public class DemandeService implements IDemandeService{
                 }
             }
         }
-        if(hadReservation){
+        if(!hadReservation){
+
             demande.setState(state);
             if(state == StateDemande.Confirmer){
                 System.out.println("Searching Chamber ");
@@ -101,7 +102,7 @@ public class DemandeService implements IDemandeService{
 
                         List<Long> CIN = new ArrayList<>();
                         CIN.add(demande.getCin());
-                        reservationService.addReservation(chamber.getNumerochamber(),CIN);
+                        reservationService.addReservation(chamber.getNumerochamber(),CIN , demande.isAutoRenewed());
                         break;
                     }
                 }

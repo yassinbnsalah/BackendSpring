@@ -45,10 +45,11 @@ public class ReservationRestController {
         return iReservationService.findReservationByEmailEtudiant(email);
     }
 
-    @PostMapping ("addReservation/{numerochamber}")
+    @PostMapping ("addReservation/{numerochamber}/{autoRenew}")
     Set<Reservation> addReservation( @PathVariable("numerochamber") long numero ,
+                               @PathVariable("autoRenew") boolean autoRenew ,
                                @RequestBody  List<Long> cin){
-        return iReservationService.addReservation( numero , cin);
+        return iReservationService.addReservation( numero , cin , autoRenew);
     }
 
     @PostMapping("addAllReservation")
