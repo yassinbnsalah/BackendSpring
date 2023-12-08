@@ -46,12 +46,12 @@ public class ChamberRestController {
     Chamber findChamberByID(@PathVariable("id") long id){
         return iChamberService.findById(id);
     }
-    @PostMapping("addChamber")
-    Chamber addChamber(@RequestBody Chamber c){
-        c.setCreatedAt(new Date());
-        return iChamberService.addChamber(c);
+        @PostMapping("addChamber")
+        Chamber addChamber(@RequestBody Chamber c){
+            c.setCreatedAt(new Date());
+            return iChamberService.addChamber(c);
 
-    }
+        }
     @PutMapping("putChamberReservation/{id}")
     Chamber putChamberReservation(@PathVariable("id") long idCh , @RequestBody Reservation r){
         return iChamberService.addChamberReservation(idCh , r);
