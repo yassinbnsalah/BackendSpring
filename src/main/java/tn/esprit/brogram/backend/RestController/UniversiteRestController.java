@@ -229,4 +229,12 @@ public class UniversiteRestController {
     }
 
 
+
+    @GetMapping("/byStatuts")
+    public List<Universite> getUniversitesByStatuts() {
+        return iUniversiteServices.getPendingUniversites();
+    }
+
+
+
 }

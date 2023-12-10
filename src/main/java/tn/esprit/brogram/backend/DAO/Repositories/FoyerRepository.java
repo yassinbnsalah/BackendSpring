@@ -13,4 +13,6 @@ public interface FoyerRepository extends JpaRepository<Foyer,Long> {
     void updateEtatById(long idFoyer, boolean newEtat);*/
 
     List<Foyer> findFoyerByUniversiteNomUniversite(String nom);
+
+    List<Foyer> findFoyerByUniversite_IdUniversite(long idUniversite);
 }

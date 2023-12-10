@@ -76,4 +76,9 @@ public class FoyerRestController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("findFoyerByUniversite/{id}")
+    List<Foyer> findFoyerByUniversite(@PathVariable("id") long idUniversite){
+        return foyerRepository.findFoyerByUniversite_IdUniversite(idUniversite);
+    }
 }

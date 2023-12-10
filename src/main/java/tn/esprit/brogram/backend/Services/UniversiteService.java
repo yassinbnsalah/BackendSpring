@@ -1,6 +1,8 @@
 package tn.esprit.brogram.backend.Services;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.esprit.brogram.backend.DAO.Entities.*;
 import tn.esprit.brogram.backend.DAO.Repositories.DocumentRepository;
@@ -8,11 +10,15 @@ import tn.esprit.brogram.backend.DAO.Repositories.FoyerRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.RatingRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class UniversiteService implements IUniversiteService{
     UniversiteRepository universiteRepository ;
     FoyerRepository foyerRepository ;
@@ -115,4 +121,41 @@ public class UniversiteService implements IUniversiteService{
 
     }
 
+    @Override
+    public List<Universite> getPendingUniversites() {
+        return universiteRepository.findByStatuts("En_attente");
+    }
+
+
+
+    @Scheduled(cron = "*/10 * * * * *")
+    public void updateStatusIfPendingForMoreThan5Minutes() {
+        List<Universite> pendingUniversites = universiteRepository.findByStatuts("En_attente");
+
+        for (Universite universite : pendingUniversites) {
+            Date createdAt = universite.getCreatedAt();
+
+            if (createdAt != null) {
+                Date now = new Date();
+
+                long timeDifference = now.getTime() - createdAt.getTime();
+                long secondsElapsed = TimeUnit.MILLISECONDS.toSeconds(timeDifference);
+                System.out.println(secondsElapsed);
+                log.info("ID: {}, createdAt: {}, secondsElapsed: {}", universite.getIdUniversite(), createdAt, secondsElapsed);
+
+                if (secondsElapsed > 10) {
+                    universite.setStatuts("desactivée");
+                    log.info("OOK DESSSSS");
+                    universiteRepository.save(universite);
+                }
+            } else {
+                log.warn("Skipping Universite with null createdAt: {}", universite.getIdUniversite());
+            }
+        }
+    }
+
+
 }
+
+
+
