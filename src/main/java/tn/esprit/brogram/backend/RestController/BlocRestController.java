@@ -2,6 +2,7 @@ package tn.esprit.brogram.backend.RestController;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +11,9 @@ import tn.esprit.brogram.backend.DAO.Repositories.BlocRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 import tn.esprit.brogram.backend.Services.IBlocService;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.Optional;
-import java.util.Set;
 
 @CrossOrigin(origins = "*")
 
@@ -24,6 +21,7 @@ import java.util.Set;
 @RestController
 @AllArgsConstructor
 @RequestMapping("BlocRestController")
+@Slf4j
 
 
 public class BlocRestController {
@@ -64,6 +62,15 @@ public class BlocRestController {
                 chamber.setUpdatedAt(new Date());
                 chamber.setBloc(b);
             }
+        }
+        List<Bloc> blocs=f.getBlocs();
+        for (Bloc bloc: blocs
+             ) {
+            if(Objects.equals(bloc.getNomBloc(), b.getNomBloc())){
+
+                throw new RuntimeException("Bloc with the same name already exists.");
+            }
+
         }
         b.setFoyer(f);
         b.setCreatedAt(new Date());
