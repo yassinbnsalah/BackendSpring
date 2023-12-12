@@ -30,5 +30,6 @@ public interface IChamberService {
     List<Chamber> findAvailableChamberByBlocFoyerUniversiteNomUniversite(String nomUniversite);
 
     void affecterBlocAChambre(long idChamber, long idBloc);
-
+    void listeChamberParBloc();
+    void pourcentageChamberParTypeChamber();
 }

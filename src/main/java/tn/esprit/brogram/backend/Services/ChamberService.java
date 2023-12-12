@@ -1,6 +1,7 @@
 package tn.esprit.brogram.backend.Services;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tn.esprit.brogram.backend.DAO.Entities.Bloc;
 import tn.esprit.brogram.backend.DAO.Entities.Chamber;
@@ -18,12 +19,14 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class ChamberService implements IChamberService{
     ChamberRepository chamberRepository;
     ReservationRepository reservationRepository ;
     BlocRepository blocRepository;
     @Override
     public Chamber addChamber(Chamber c) {
+        c.setEtat(true);
         return chamberRepository.save(c) ;
     }
 
@@ -148,4 +151,35 @@ public class ChamberService implements IChamberService{
         chambre.setBloc(bloc);
         chamberRepository.save(chambre);
     }
+
+    public void listeChamberParBloc(){
+        List<Bloc> blocs = blocRepository.findAll();
+        blocs.forEach(bloc -> {
+            log.info(" Bloc => "+ bloc.getNomBloc()+" ayant une capacite "+bloc.getCapaciteBloc());
+            if(bloc.getChambers().isEmpty()){
+                log.info("Pas de chamber disponible dans ce bloc");
+            }else{
+                bloc.getChambers().forEach(chamber -> {
+                    log.info("NumChamber"+chamber.getNumerochamber()+" type : "+chamber.getTypeC());
+                    log.info("la liste des Chambres pour ce bloc ");
+
+                });
+            }
+
+        });
+    }
+    public void pourcentageChamberParTypeChamber(){
+
+
+        int nbSimple = chamberRepository.countChambreByTypeC(TypeChamber.Simple);
+        int nbDoube = chamberRepository.countChambreByTypeC(TypeChamber.Double);
+        int nbTriple = chamberRepository.countChambreByTypeC(TypeChamber.Triple);
+        long allChambre = chamberRepository.count();
+        log.info("Nombre Total des chambres:"+allChambre);
+        log.info("Le prourcentage des chambres pour le type SIMPLE est égale a "+nbSimple/allChambre*100);
+        log.info("Le prourcentage des chambres pour le type DOUBLE est égale a "+nbDoube/allChambre*100);
+        log.info("Le prourcentage des chambres pour le type TRIPLE est égale a "+nbTriple/allChambre*100);
+    }
+
+
 }
