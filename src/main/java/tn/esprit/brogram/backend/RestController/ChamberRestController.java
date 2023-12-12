@@ -49,6 +49,7 @@ public class ChamberRestController {
     @PostMapping("addChamber")
     Chamber addChamber(@RequestBody Chamber c){
         c.setCreatedAt(new Date());
+        c.setEtat(true);
         return iChamberService.addChamber(c);
 
     }
