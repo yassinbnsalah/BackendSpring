@@ -43,10 +43,10 @@ public class Foyer {
     private Date UpdatedAt;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "foyer" , cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "foyer" )
     private Universite universite ;
 
-    @OneToMany(mappedBy = "foyer" , cascade =  CascadeType.ALL)
+    @OneToMany(mappedBy = "foyer")
     List<Bloc> blocs = new ArrayList<>();
     @Lob
     @Column(name = "imagebyte", length = 100000)  // Adjust the length as needed

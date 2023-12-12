@@ -91,18 +91,18 @@ public class UserRestController {
 
 
     @GetMapping("SendEmail")
-    public void sendEmail(@RequestParam("email") String email){
+    public void sendEmail(@RequestParam("email") String email) {
         User user = iUserService.findByEmail(email);
-        if (user == null) {
+        if (user.getId() == 0) {
             throw new UserNotFoundException("User not found by the provided email");
         } else {
             String subject = "Rest your password";
-            String body = "Click on the lick below to rest ur password \n http://localhost:4200/reset-password/" + email;
+            String body = "Click on the lick below to rest your password \n http://localhost:4200/reset-password/" + email;
             emailService.sendMail(email, subject, body);
         }
-    }
 
-    @PostMapping("/uploadImg/{idUser}")
+    }
+        @PostMapping("/uploadImg/{idUser}")
     public User addImg(@RequestParam("file") MultipartFile file , @PathVariable("idUser") long idUser) {
 
         User user = userRepo.findById(idUser).get();

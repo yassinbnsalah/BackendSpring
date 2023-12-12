@@ -22,8 +22,9 @@ public class FoyerService implements IFoyerService {
         Universite u = universiteRepository.findUnBynomUniversite(name);
         u.setFoyer(f);
         f.setCreatedAt(new Date());
+        foyerRepository.save(f);
         universiteRepository.save(u);
-        return foyerRepository.save(f);
+        return f ;
     }
 
     @Override

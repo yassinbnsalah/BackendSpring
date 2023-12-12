@@ -1,6 +1,8 @@
 package tn.esprit.brogram.backend.Services;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.esprit.brogram.backend.DAO.Entities.*;
 import tn.esprit.brogram.backend.DAO.Repositories.DocumentRepository;
@@ -8,17 +10,20 @@ import tn.esprit.brogram.backend.DAO.Repositories.FoyerRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.RatingRepository;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class UniversiteService implements IUniversiteService{
     UniversiteRepository universiteRepository ;
     FoyerRepository foyerRepository ;
-
+    DocumentRepository documentRepository ;
     @Override
     public Universite addUniversite(Universite u) {
+        u.setCreatedAt(new Date());
+        u.setUpdatedAt(new Date());
         return universiteRepository.save(u);
     }
 
@@ -27,9 +32,18 @@ public class UniversiteService implements IUniversiteService{
         return universiteRepository.saveAll(ls);
     }
 
+
     @Override
     public Universite editUniversite(Universite u) {
-        return universiteRepository.save(u);
+        Universite universite = universiteRepository.findById(u.getIdUniversite()).get();
+        List<Documents> documentList ;
+        documentList = documentRepository.findByUniversiteIdUniversite(u.getIdUniversite());
+        universiteRepository.save(u);
+        for (Documents documents : documentList) {
+            documents.setUniversite(u);
+            documentRepository.save(documents);
+        }
+        return u;
     }
 
     @Override
@@ -54,7 +68,9 @@ public class UniversiteService implements IUniversiteService{
 
     @Override
     public Universite updateStatus(long id, String status) {
+
         Universite universite = universiteRepository.findById(id).orElse(Universite.builder().build());
+        universite.setCreatedAt(new Date());
         universite.setStatuts(status);
         return universiteRepository.save(universite);
     }
@@ -74,6 +90,7 @@ public class UniversiteService implements IUniversiteService{
     public Universite affecterFoyerAUniversite(long idFoyer, String nomUniversite) {
         Foyer f = foyerRepository.findById(idFoyer).get();
         Universite u = universiteRepository.findUnBynomUniversite(nomUniversite);
+        u.setCreatedAt(new Date());
         u.setFoyer(f);
         universiteRepository.save(u);
         return u;
@@ -103,7 +120,7 @@ public class UniversiteService implements IUniversiteService{
         return universiteRepository.findUniversiteByNomUniversiteAndEmail(name,email);
     }
 
-    DocumentRepository documentRepository;
+
     @Override
     public Universite UnifindByNomUniv(String nomUniversite) {
         Universite universite = universiteRepository.findUnBynomUniversite(nomUniversite);
@@ -115,4 +132,41 @@ public class UniversiteService implements IUniversiteService{
 
     }
 
+    @Override
+    public List<Universite> getPendingUniversites() {
+        return universiteRepository.findByStatuts("En_attente");
+    }
+
+
+
+   // @Scheduled(cron = "*/10 * * * * *")
+    public void updateStatusIfPendingForMoreThan5Minutes() {
+        List<Universite> pendingUniversites = universiteRepository.findByStatuts("En_attente");
+
+        for (Universite universite : pendingUniversites) {
+            Date createdAt = universite.getCreatedAt();
+
+            if (createdAt != null) {
+                Date now = new Date();
+
+                long timeDifference = now.getTime() - createdAt.getTime();
+                long secondsElapsed = TimeUnit.MILLISECONDS.toSeconds(timeDifference);
+                System.out.println(secondsElapsed);
+                log.info("ID: {}, createdAt: {}, secondsElapsed: {}", universite.getIdUniversite(), createdAt, secondsElapsed);
+
+                if (secondsElapsed > 10) {
+                    universite.setStatuts("desactivée");
+                    log.info("OOK DESSSSS");
+                    universiteRepository.save(universite);
+                }
+            } else {
+                log.warn("Skipping Universite with null createdAt: {}", universite.getIdUniversite());
+            }
+        }
+    }
+
+
 }
+
+
+

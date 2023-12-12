@@ -25,60 +25,66 @@ import java.util.List;
 @RequestMapping("FoyerRestController")
 public class FoyerRestController {
     private final FoyerRepository foyerRepository;
+
     @Autowired
     public FoyerRestController(FoyerRepository foyerRepository) {
         this.foyerRepository = foyerRepository;
     }
+
     @Autowired
     IFoyerService iFoyerService;
     BlocRepository blocRepository;
     private UniversiteRepository universiteRepository;
+
     @GetMapping("findAllFoyer")
-    List<Foyer> findAll(){
+    List<Foyer> findAll() {
         return iFoyerService.findAllFoyer();
     }
 
     @GetMapping("findFoyerByUnversiteName/{nom}")
-    List<Foyer> findFoyerByUniversiteNomUniversite(@PathVariable("nom") String nom){
+    List<Foyer> findFoyerByUniversiteNomUniversite(@PathVariable("nom") String nom) {
         return iFoyerService.findFoyerByUniversersite(nom);
     }
+
     @GetMapping("findByIdFoyer/{id}")
-    Foyer findbyIdFoyer(@PathVariable("id") long id){
+    Foyer findbyIdFoyer(@PathVariable("id") long id) {
         return iFoyerService.findByIDFoyer(id);
     }
 
 
     @PostMapping("AddFoyer/{name}")
-    Foyer AddFoyer(@RequestBody Foyer f , @PathVariable("name") String name){
+    Foyer AddFoyer(@RequestBody Foyer f, @PathVariable("name") String name) {
 
-        return iFoyerService.AddFoyer(f,name);
+        return iFoyerService.AddFoyer(f, name);
     }
 
     @PostMapping("AddAllFoyer")
-    List<Foyer> AddAllFoyer(@RequestBody List<Foyer> ls){
+    List<Foyer> AddAllFoyer(@RequestBody List<Foyer> ls) {
         return iFoyerService.AddAllFoyer(ls);
     }
 
     @PutMapping("UpdateFoyer")
-    Foyer updateFoyer(@RequestBody Foyer f){
+    Foyer updateFoyer(@RequestBody Foyer f) {
         System.out.println("update");
         f.setUpdatedAt(new Date());
         return iFoyerService.editFoyer(f);
     }
 
     @DeleteMapping("DeleteFoyerByID/{id}")
-    void DeleteFoyerByID(@PathVariable("id") long id){
+    void DeleteFoyerByID(@PathVariable("id") long id) {
         iFoyerService.DeleteByIDFoyer(id);
     }
 
     @DeleteMapping("DeleteFoyer")
-    void DeleteFoyer(@RequestBody Foyer f){
+    void DeleteFoyer(@RequestBody Foyer f) {
         iFoyerService.deleteFoyer(f);
     }
+
     @GetMapping("findFoyerByUniversite/{id}")
-    List<Foyer> findFoyerByUniversite(@PathVariable("id") long idUniversite){
+    List<Foyer> findFoyerByUniversite(@PathVariable("id") long idUniversite) {
         return foyerRepository.findFoyerByUniversite_IdUniversite(idUniversite);
     }
+
     @PutMapping("updateEtatById/{idFoyer}")
     public ResponseEntity<String> updateFoyerEtatById(@PathVariable long idFoyer) {
         Foyer foyer = foyerRepository.findById(idFoyer).orElse(null);
@@ -105,8 +111,9 @@ public class FoyerRestController {
 
 
     ImageRepositroy imageRepositroy;
+
     @PostMapping("/uploadImg/{idFoyer}")
-    public Foyer addImg(@RequestParam("file") MultipartFile file , @PathVariable("idFoyer") long idFoyer) {
+    public Foyer addImg(@RequestParam("file") MultipartFile file, @PathVariable("idFoyer") long idFoyer) {
 
         Foyer foyer = foyerRepository.findById(idFoyer).get();
         System.out.println("OK");
@@ -118,5 +125,6 @@ public class FoyerRestController {
             throw new RuntimeException(e);
         }
         return foyer;
+
     }
 }

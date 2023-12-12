@@ -42,7 +42,7 @@ public class Universite {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Foyer foyer ;
 
     @Column(name="CreatedAt")

@@ -101,4 +101,30 @@ public class ReservationService implements IReservationService {
         reservationRepository.delete(r);
 
     }
+
+    @Override
+    public void RenewAutoReservation() {
+        List<Reservation> listeReservation =  reservationRepository.findAll();
+        for (Reservation r : listeReservation) {
+            if(r.isAutoRenew()){
+                LocalDate dateDebutAU;
+                LocalDate dateFinAU;
+                int year = LocalDate.now().getYear() % 100;
+                if (LocalDate.now().getMonthValue() <= 7) {
+                    dateDebutAU = LocalDate.of(Integer.parseInt("20" + (year - 1)), 9, 15);
+                    dateFinAU = LocalDate.of(Integer.parseInt("20" + year), 6, 30);
+                } else {
+                    dateDebutAU = LocalDate.of(Integer.parseInt("20" + year), 9, 15);
+                    dateFinAU = LocalDate.of(Integer.parseInt("20" + (year + 1)), 6, 30);
+                }
+                r.setAnneeReservation(new Date());
+                r.setAnneeUniversitaire(dateDebutAU.getYear()+"-"+dateFinAU.getYear());
+                r.setDateDebut(dateDebutAU);
+                r.setDateFin(dateFinAU);
+                r.setEstValide(true);
+                r.setStatus(StateReservation.confirmed);
+                reservationRepository.save(r);
+            }
+        }
+    }
 }

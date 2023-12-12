@@ -17,4 +17,6 @@ public interface IReservationService {
 
     void deleteById(String id);
     void deleteReservation(Reservation r);
+
+    void RenewAutoReservation();
 }

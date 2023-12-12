@@ -22,6 +22,7 @@ import tn.esprit.brogram.backend.DAO.Entities.Universite;
 import tn.esprit.brogram.backend.DAO.Repositories.ImageRepositroy;
 import tn.esprit.brogram.backend.DAO.Repositories.UniversiteRepository;
 
+import tn.esprit.brogram.backend.Services.EmailService;
 import tn.esprit.brogram.backend.Services.IUniversiteService;
 
 import java.io.IOException;
@@ -147,6 +148,7 @@ public class UniversiteRestController {
     }
     private final PasswordEncoder passwordEncoder;
     UserRepository userRepository ;
+    EmailService emailService ;
     @PutMapping("updateStatus/{id}")
     public ResponseEntity<Universite> updateStatus(@PathVariable long id, @RequestParam String status) {
         try {
@@ -162,7 +164,13 @@ public class UniversiteRestController {
                 user.setEmail(updatedUniversite.getEmail());
                 user.setPassword(passwordEncoder.encode((updatedUniversite.getEmail())));
                 user.setRole(Roles.AGENTUNIVERSITE);
+                emailService.sendSimpleMail(new EmailDetails(updatedUniversite.getEmail() ,
+                        "YOUR UNIVERSITE IS BEEN ACCEPTED SUCCESSFYLLY TO LOGIN PRESS <a href='localhost:4200/login'>here </a>" , "subject" ,null));
                 userRepository.save(user);
+            }else{
+                emailService.sendSimpleMail(new EmailDetails(updatedUniversite.getEmail() ,
+                        "YOUR UNIVERSITE IS BEEN REFUSSED CHECK YOUR PROVIDED DATA " , "subject" ,null));
+
             }
             return new ResponseEntity<>(updatedUniversite, HttpStatus.OK);
         } catch (Exception ex) {
@@ -243,6 +251,14 @@ public class UniversiteRestController {
         Universite existingUniversite = iUniversiteServices.UnifindByNomUniv(name);
         return existingUniversite == null;
     }
+
+
+
+    @GetMapping("/byStatuts")
+    public List<Universite> getUniversitesByStatuts() {
+        return iUniversiteServices.getPendingUniversites();
+    }
+
 
 
 }

@@ -71,7 +71,7 @@ public class AuthController {
 
 
 
-    @PostMapping("/auth/register")
+        @PostMapping("/auth/register")
     public ResponseEntity<String> registerUser(@RequestBody RegisterDto registerDto) {
         User user = userRepo.findByEmail(registerDto.getEmail());
         if (user != null) {

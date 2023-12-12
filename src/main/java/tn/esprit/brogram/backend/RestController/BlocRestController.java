@@ -48,8 +48,12 @@ public class BlocRestController {
     @GetMapping("findAllByuniversite/{name}")
     List<Bloc> findAllByuniversite(@PathVariable("name") String name){
         Universite u = universiteRepository.findUnBynomUniversite(name) ;
-      Foyer f=u.getFoyer();
-      return f.getBlocs();
+        if(u.getFoyer() != null ){
+            Foyer f=u.getFoyer();
+            return f.getBlocs();
+        }else{
+            return null ;
+        }
 
     }
 

@@ -31,44 +31,25 @@ public class EmailServiceImpl implements EmailService{
 
     @Override
     public String sendSimpleMail(EmailDetails details) {
-        // Try block to check for exceptions
-        //try {
-            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
+        try {
+            Context context = new Context() ;
 
-            try {
-                Context context = new Context() ;
-                context.setVariable("message", "Yessine");
-                helper.setTo("yacinbnsalh@gmail.com");
-                helper.setSubject("test html template");
-                String htmlContent = templateEngine.process("testFile", context);
-                helper.setText(htmlContent, true);
-                javaMailSender.send(mimeMessage);
-            } catch (MessagingException e) {
-                // Handle exception
-                System.out.println(e.getMessage());
-            }
-           /* // Creating a simple mail message
-            SimpleMailMessage mailMessage
-                    = new SimpleMailMessage();
+            helper.setTo(details.getRecipient());
+            helper.setSubject("Universite Process Information");
+            String htmlContent = templateEngine.process("universiteMail", context);
+            helper.setText(htmlContent, true);
+            javaMailSender.send(mimeMessage);
+            System.out.println("message sended succefully");
+        } catch (MessagingException e) {
+            // Handle exception
+            System.out.println(e.getMessage());
 
-            // Setting up necessary details
-            mailMessage.setFrom("contact.fithealth23@gmail.com");
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText(details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
-            System.out.println("i here"+mailMessage);
-            // Sending the mail
-            javaMailSender.send(mailMessage);*/
-            return "Mail Sent Successfully...";
-       // }
-
-        // Catch block to handle the exceptions
-       // catch (Exception e) {
-        //    System.out.println(e.getMessage());
-         //   return "Error while Sending Mail";
-        //}
+        }
+        return "message sended succefully" ;
     }
+
 
     @Override
     public void sendMailReservationInformation(Reservation r, User u) {

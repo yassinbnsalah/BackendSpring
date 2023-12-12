@@ -7,6 +7,7 @@ import tn.esprit.brogram.backend.DAO.Entities.Universite;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface IUniversiteService {
     Universite addUniversite(Universite u);
@@ -33,4 +34,8 @@ public interface IUniversiteService {
     Universite UnifindByNomUniv(String nomUniversite);
 
     List<Documents> downloadDocs(long idUniversite);
+
+    List<Universite> getPendingUniversites();
+
+    void updateStatusIfPendingForMoreThan5Minutes();
 }
